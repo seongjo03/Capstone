@@ -1,0 +1,24 @@
+{
+    "prepare_queue": {
+        "installed": [],
+        "uninstalled": []
+    },
+    "config_munge": {
+        "files": {}
+    },
+    "installed_plugins": {
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "com.app.capstone"
+        },
+        "cordova-plugin-splashscreen": {
+            "PACKAGE_NAME": "com.app.capstone"
+        },
+        "cordova-plugin-firebase": {
+            "PACKAGE_NAME": "com.app.capstone"
+        },
+        "cordova-plugin-fcm": {
+            "PACKAGE_NAME": "com.app.capstone"
+        }
+    },
+    "dependent_plugins": {}
+}
