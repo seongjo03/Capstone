@@ -78,8 +78,20 @@
                 width:32%; border:solid; background-color:#222222; color:red; display:inline-table; margin-right:3px; margin-bottom:3px; text-shadow:0 0 0;
             }\
             p{
-                font-family: : 'Leelawadee'; text-shadow:0 0 0;
+                font-family: 'Leelawadee'; text-shadow:0 0 0;
             }
+            td{
+                font-family: 'Leelawadee'; 
+                text-shadow:0 0 0;
+                color: white;
+            }
+            h4{
+                font-family: 'Leelawadee'; 
+                text-shadow:0 0 0;
+                text-align: center;
+                color: white;
+            }
+            
 		</style>
         
         
@@ -99,10 +111,15 @@
             
             var intervalDetail;
             var detailinterval = 5000;
+            
+            var orientation = "portrait";
+            var locked = window.screen.lockOrientation(orientation);
         
             $(document).ready(function () {
-           
             
+                
+           
+                
                 
                 
                 $('#loginBtn').click(function() {
@@ -119,41 +136,61 @@
                         
                             if(data == 1){                 // if user sign in successfully,
                             
+                                var source1 = "";
+                                var source2 = "";
+                            
                                 $.ajax({
                                     url:"http://seongjo03.gonetis.com/capstone/buildings.php",
                                     success: function(json){
                                         var data = JSON.parse(json);
                                         var tester = "";
                                         
-                                        var source1 = "";
-                                        var source2 = "";
+                                        
                                         
                                         for(var i in data.b_alias){
-                                            tester = tester + "<div class='item active' onclick='javascript:buildingInfo('" + data.b_alias[i] + "')'>\n";
+                                            //tester = tester + "<div class='item active' onclick='javascript:buildingInfo('" + data.b_alias[i] + "')'>\n";
                                             if (i == 0) {
                                                 source1 = source1
                                                     + "<li data-target='#myCarousel' data-slide-to='" + i + "' class='active'></li>\n";
                                                 
                                                 source2 = source2
-                                                    +"<div class='item active' onclick='javascript:buildingInfo(\"" + data.b_alias[i] + "\")'>"
-                                                    +    "<center><img src='http://seongjo03.gonetis.com/capstone/buildingIMG/" + data.b_alias[i] + ".png' alt='" + data.b_alias[i] + "'></center>"
+                                                    +"<div class='item active' onclick='javascript:buildingInfo(\"" + data.b_alias[i] + "\")' style='height: 100%;'>"
+                                                    +"<table align='center' style='height:25%;>"
+                                                    +"<tr style='vertical-align:top;'>"
+                                                    +"<td>"
+                                                    +"<p style='font-size:20pt'>" + data.b_alias[i] + "</p>"
+                                                    +"<p style='font-size:10pt; text-align:left;'>" + data.b_etc[i] + "</p>"
+                                                    +"</td>"
+                                                    +"</tr>"
+                                                    +"</table>"
+                                                    +"<center><img src='http://seongjo03.gonetis.com/capstone/buildingIMG/" + data.b_alias[i] + ".png' alt='" + data.b_alias[i] + "' style='position:relative; height:45%;'></center>"
                                                     //+    "<img src='img/Building_A.jpg'>"
-                                                    +    "<div class='carousel-caption'><h3>" + data.b_alias[i] + "</h3>"
-                                                    +    "<p>" + data.b_etc[i] + "</p></div></div>";
+                                                    //+    "<div class='carousel-caption'><h3>" + data.b_alias[i] + "</h3>"
+                                                    //+    "<p>" + data.b_etc[i] + "</p></div>"
+                                                    +"</div>";
                                             }else{
                                                 source1 = source1
                                                     +"<li data-target='#myCarousel' data-slide-to='" + i + "'></li>\n";
                                                 
                                                 source2 = source2
-                                                    +    "<div class='item' onclick='javascript:buildingInfo(\"" + data.b_alias[i] + "\")'>"
-                                                    +    "<img src='http://seongjo03.gonetis.com/capstone/buildingIMG/" + data.b_alias[i] + ".png' alt='" + data.b_alias[i] + "'>"
-                                                    +    "<div class='carousel-caption'><h3>" + data.b_alias[i] + "</h3>"
-                                                    +    "<p>" + data.b_etc[i] + "</p></div></div>";
+                                                    +"<div class='item' onclick='javascript:buildingInfo(\"" + data.b_alias[i] + "\")' style='height: 100%;'>"
+                                                    +"<table align='center' style='height:25%;>"
+                                                    +"<tr style='vertical-align:top;'>"
+                                                    +"<td>"
+                                                    +"<p style='font-size:20pt'>" + data.b_alias[i] + "</p>"
+                                                    +"<p style='font-size:10pt; text-align:left;'>" + data.b_etc[i] + "</p>"
+                                                    +"</td>"
+                                                    +"</tr>"
+                                                    +"</table>"
+                                                    +"<center><img src='http://seongjo03.gonetis.com/capstone/buildingIMG/" + data.b_alias[i] + ".png' alt='" + data.b_alias[i] + "' style='position:relative; height:45%;'></center>"
+                                                    //+    "<img src='img/Building_A.jpg'>"
+                                                    //+    "<div class='carousel-caption'><h3>" + data.b_alias[i] + "</h3>"
+                                                    //+    "<p>" + data.b_etc[i] + "</p></div>"
+                                                    +"</div>";
                                             }   
                                         }
                                         
-                                        $('#carousel-indicators').html(source1);
-                                        $('#carousel-inner').html(source2);
+                                        
                                         
                                         element = document.getElementById('carousel-indicators');
                                         var searchThis = element.innerHTML;
@@ -164,14 +201,19 @@
                                     error: function failCallBk(XMKHttpRequest, textStatus, errorThrown){
                                         alert(XMKHttpRequest.status + " " + XMKHttpRequest.statusText + " " + errorThrown + "\n" +"An error occured while processing your request. Please try again.");
                                     } 
-                                });
-                            
-                            
-                                $.mobile.changePage( "#bcpage", 
+                                }).done(function() {
+                                    $('#carousel-indicators').html(source1);
+                                    $('#carousel-inner').html(source2);
+                                
+                                    $.mobile.changePage( "#bcpage", 
                                     { transition: "pop", 
                                     changeHash: true, 
                                     reverse :true }
                                 );
+                                });
+                            
+                            
+                                
                             }else{
                                 alert("Incorrect ID or Password.");
                             }
@@ -354,7 +396,7 @@
                 <!--
                 <h3><center>A001</center></h3>
                 <div align="center">
-                    <img src="img/sample_chart.png"></img>
+                    <img src="img/sample_chart.png">
                 </div>
                 <table align="center">
                     <tr align="center">
@@ -509,19 +551,19 @@
             <table style="position: absolute; top: 47%; left: 15%; width: 70%;">
                 <tr>
                     <td style="color:white; font-family:'Leelawadee'; font-size:10pt;">ID<br>
-                        <input id="id" type="text" value="seongjo03" style="position:absolute; background-color:#ffffff; color:#356d6e; font-family: 'Leelawadee'; font-size: 10px;  width: 100%;"></input>
+                        <input id="id" type="text" value="seongjo03" style="position:absolute; background-color:#ffffff; color:#356d6e; font-family: 'Leelawadee'; font-size: 10px;  width: 100%;">
                         <br>
                     </td>
                 </tr>
                 <tr>
                     <td style="color:white; font-family:'Leelawadee'; font-size:10pt;">PASSWORD<br>
-                        <input id="pass" type="password" value="1234" style="position:absolute; background-color:#ffffff; color:#356d6e; font-family: 'Leelawadee'; font-size: 10px;  width: 100%;"></input>
+                        <input id="pass" type="password" value="1234" style="position:absolute; background-color:#ffffff; color:#356d6e; font-family: 'Leelawadee'; font-size: 10px;  width: 100%;">
                         <br><br>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <input id="loginBtn" data-role="none" type="button" value="Login" style="position:absolute; background-color:#356d6e; color:#ffffff; font-family: 'Leelawadee'; font-size: 10px; border: 0; padding: 7px; width : 20%; right:0;"></input>
+                        <input id="loginBtn" data-role="none" type="button" value="Login" style="position:absolute; background-color:#356d6e; color:#ffffff; font-family: 'Leelawadee'; font-size: 10px; border: 0; padding: 7px; width : 20%; right:0;">
                     </td>
                 </tr>
             </table>
@@ -533,9 +575,11 @@
         
             
             
-            <div id="myCarousel" class="carousel slide" data-ride="carousel" style="position: absolute; top: 30%; width:100%;">
+            <div id="myCarousel" class="carousel slide" data-ride="carousel" style="position: absolute; height: 100%; width:100%;">
+                <img src="img/header_bar.png" style="position: absolute; top:0; height:8%; width:100%">
+            
                 <!-- Indicators -->
-                <ol class="carousel-indicators" id="carousel-indicators">
+                <ol class="carousel-indicators" id="carousel-indicators" style="top:80%;">
                 <!--
                     <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
                     <li data-target="#myCarousel" data-slide-to="1"></li>
@@ -543,7 +587,7 @@
                 </ol>
 
                 <!-- Wrapper for slides -->
-                <div class="carousel-inner" id="carousel-inner" role="listbox">
+                <div class="carousel-inner" id="carousel-inner" role="listbox" style="position:absolute; top:8%; height:92%;">
                 <!--
                     <div class="item active">
                         <a href="#BuildingInfoPage">
@@ -666,7 +710,7 @@
             
                 <h3 id="detail_room"></h3>
                 <div align="center" id="chart1">
-                    <!--<img src="img/sample_chart.png"></img>-->
+                    <!--<img src="img/sample_chart.png">-->
                 </div>
                 <table align="center">
                     <tr align="center">
