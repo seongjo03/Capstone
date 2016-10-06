@@ -23,6 +23,14 @@ module.exports = [
         "clobbers": [
             "FCMPlugin"
         ]
+    },
+    {
+        "id": "cordova-plugin-powermanagement.powermanagement",
+        "file": "plugins/cordova-plugin-powermanagement/www/powermanagement.js",
+        "pluginId": "cordova-plugin-powermanagement",
+        "clobbers": [
+            "window.powermanagement"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -31,7 +39,8 @@ module.exports.metadata =
     "cordova-plugin-whitelist": "1.3.0",
     "cordova-plugin-splashscreen": "4.0.0",
     "cordova-plugin-firebase": "0.1.12",
-    "cordova-plugin-fcm": "1.1.4"
+    "cordova-plugin-fcm": "1.1.4",
+    "cordova-plugin-powermanagement": "1.0.5"
 };
 // BOTTOM OF METADATA
 });

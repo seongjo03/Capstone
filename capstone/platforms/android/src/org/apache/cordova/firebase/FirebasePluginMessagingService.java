@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.PowerManager;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.text.TextUtils;
@@ -80,6 +81,10 @@ public class FirebasePluginMessagingService extends FirebaseMessagingService {
 
         NotificationManager notificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+        PowerManager pm = (PowerManager) this.getSystemService(Context.POWER_SERVICE);
+        PowerManager.WakeLock wakelock = pm.newWakeLock(PowerManager.FULL_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "TAG");
+        wakelock.acquire(5000);
 
         notificationManager.notify(id, notificationBuilder.build());
     }

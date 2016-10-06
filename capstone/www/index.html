@@ -33,34 +33,52 @@
         <script src="js/lib/jquery.mobile-1.4.5.min.js"></script>
         
         
-        <script src="js/lib/jquery.ajax-cross-origin.min.js"></script>
+        <!--<script src="js/lib/jquery.ajax-cross-origin.min.js"></script>-->
         
         <!--
         <script src="xml2json.js"></script>
         <script src="jquery.xdomainajax.js"></script>
         -->
+        <script language="javascript" type="text/javascript" src="js/lib/jqplot/excanvas.js"></script>
+        <script type="text/javascript" src="js/lib/jqplot/jquery.jqplot.js"></script>
+        <script type="text/javascript" src="js/lib/jqplot/plugins/jqplot.highlighter.js"></script>
+        <script type="text/javascript" src="js/lib/jqplot/plugins/jqplot.cursor.js"></script>
+        <script type="text/javascript" src="js/lib/jqplot/plugins/jqplot.dateAxisRenderer.js"></script>
+        <link rel="stylesheet" type="text/css" href="js/lib/jqplot/jquery.jqplot.css" /> 
+        
+        <script type="text/javascript" src="js/lib/jqplot/plugins/jqplot.logAxisRenderer.js"></script>
+        <script type="text/javascript" src="js/lib/jqplot/plugins/jqplot.canvasTextRenderer.js"></script>
+        <script type="text/javascript" src="js/lib/jqplot/plugins/jqplot.canvasAxisLabelRenderer.js"></script>
+        <script type="text/javascript" src="js/lib/jqplot/plugins/jqplot.canvasAxisTickRenderer.js"></script>
+        <script type="text/javascript" src="js/lib/jqplot/plugins/jqplot.categoryAxisRenderer.js"></script>
+        <script type="text/javascript" src="js/lib/jqplot/plugins/jqplot.barRenderer.js"></script>
+        
         
         
 		
         <title>Hello World</title>
 		<style>
             .ui-page{
-                background-color : #00bdaa;
+                background-color : #86ced1;
             }
             .ui-btn{
-                color : #aa0000;
+                padding: 0px;
+                font-family : 'Leelawadee';
             }
-			#LoginPage{
-				font-family: "Times New Roman", Times, serif;
-			}
+            .ui-btn-corner-all{
+                border-radius:0em;
+            }
             body{
-                background-color : #00bdaa;
+                background-color : #86ced1;
             }
             .stat1{
                 width:32%; border:solid; background-color:white; display:inline-table; margin-right:3px; margin-bottom:3px; text-shadow:0 0 0;
             }
             .stat2{
                 width:32%; border:solid; background-color:#222222; color:red; display:inline-table; margin-right:3px; margin-bottom:3px; text-shadow:0 0 0;
+            }\
+            p{
+                font-family: : 'Leelawadee'; text-shadow:0 0 0;
             }
 		</style>
         
@@ -78,26 +96,24 @@
         <script type="text/javascript">
             var intervalRoomInfo;
             var listinterval = 5000;
+            
+            var intervalDetail;
             var detailinterval = 5000;
         
             $(document).ready(function () {
-                setInterval("$('.blink').fadeOut().fadeIn();",3000);
+           
+            
+                
                 
                 $('#loginBtn').click(function() {
-                    //alert($('#email').val()+ " " + $('#pass').val());
-                    //alert("Login Success");
-                    //$.mobile.changePage( "#bcpage", { transition: "flip", changeHash: false });
+                    //alert($('#id').val()+ " " + $('#pass').val());
                     $.ajax({
                             
                         //type: "GET",
-                        //url: "./login.php",                                 // use for desktop
                         url: "http://seongjo03.gonetis.com/capstone/login.php",   // use for mobile
-                        //data: "email="+$("#email").val()+"&pass="+$("#pass").val(),
-                        
-                        data: {email: $("#email").val(),
-                                pass: $("#pass").val()},
+                        data: {ID: $("#id").val(),
+                                PASS: $("#pass").val()},
                         dataType: "json",
-                        //crossDomain: true,
                         success: function(json){
                             var data = JSON.parse(json);            //Parsing JSON data
                         
@@ -120,7 +136,7 @@
                                                 
                                                 source2 = source2
                                                     +"<div class='item active' onclick='javascript:buildingInfo(\"" + data.b_alias[i] + "\")'>"
-                                                    +    "<img src='http://seongjo03.gonetis.com/capstone/buildingIMG/" + data.b_alias[i] + ".jpg' alt='" + data.b_alias[i] + "'>"
+                                                    +    "<center><img src='http://seongjo03.gonetis.com/capstone/buildingIMG/" + data.b_alias[i] + ".png' alt='" + data.b_alias[i] + "'></center>"
                                                     //+    "<img src='img/Building_A.jpg'>"
                                                     +    "<div class='carousel-caption'><h3>" + data.b_alias[i] + "</h3>"
                                                     +    "<p>" + data.b_etc[i] + "</p></div></div>";
@@ -130,7 +146,7 @@
                                                 
                                                 source2 = source2
                                                     +    "<div class='item' onclick='javascript:buildingInfo(\"" + data.b_alias[i] + "\")'>"
-                                                    +    "<img src='http://seongjo03.gonetis.com/capstone/buildingIMG/" + data.b_alias[i] + ".jpg' alt='" + data.b_alias[i] + "'>"
+                                                    +    "<img src='http://seongjo03.gonetis.com/capstone/buildingIMG/" + data.b_alias[i] + ".png' alt='" + data.b_alias[i] + "'>"
                                                     +    "<div class='carousel-caption'><h3>" + data.b_alias[i] + "</h3>"
                                                     +    "<p>" + data.b_etc[i] + "</p></div></div>";
                                             }   
@@ -303,7 +319,10 @@
                             document.getElementById(json.r_roomno[i]+"_status").className = "stat2";
                         }
                         for(var i in json2.r_roomno){
-                            document.getElementById(json.r_roomno[i]+"_status").className = "stat1";
+                            var temp = document.getElementById(json.r_roomno[i]+"_status");
+                            if (temp) {
+                                temp.className = "stat1";
+                            }
                             if(json2.r_light[i] == 1){
                                 document.getElementById(json2.r_roomno[i]+"_light").src = 'img/light_on.png';
                             }else{
@@ -320,12 +339,16 @@
 
                     },
                     error: function failCallBk(XMKHttpRequest, textStatus, errorThrown){
-                    console.log(XMKHttpRequest.status + " " + XMKHttpRequest.statusText + " " + errorThrown + "\n" +"An error occured while processing your request. Please try again.");
+                        console.log(XMKHttpRequest.status + " " + XMKHttpRequest.statusText + " " + errorThrown + "\n" +"An error occured while processing your request. Please try again.");
                     } 
                 });
             }
             
             function detail(building, roomno){
+                clearInterval(intervalDetail);
+                
+                
+                
                 //console.log(building + " " + roomno);
                 /*
                 <!--
@@ -346,11 +369,14 @@
             </div>
             -->
             */
+            /*
                 var source = "";
+                
                 source = source
                     + "<h3><center>" + building + "-" + roomno + "</center></h3>"
                     + "<div align='center'>"
-                    + "<img src='img/sample_chart.png'></img>"
+                    + "<div id='chart1' style='width:100%'>"
+                    + "</div>"
                     + "</div>"
                     + "<table align='center'>"
                     + "<tr align='center'>"
@@ -362,59 +388,149 @@
                     + "<td style='padding:10px;'>On</td>"
                     + "</tr>"
                     + "</table>";
-                    
-                document.getElementById('roominfo').innerHTML = source;
                 
+                document.getElementById('roominfo').innerHTML = source;
+              */  
+                document.getElementById('detail_room').innerHTML = "<center>" + building + "-" + roomno + "</center>";
+              
                 $.mobile.changePage( "#RoomInfoPage", 
                     { transition: "pop", 
                     changeHash: false, 
                     reverse :true }
                 );
+                
+                detailreload(building, roomno);
+                
+                intervalDetail = setInterval(function(){
+                            
+                          detailreload(building, roomno);
+                        }, 2000);
+                
+                
+                
+                
+                
+            }
+            
+            function detailreload(building, roomno){
+            
+                $.ajax({
+                    url:"http://seongjo03.gonetis.com/capstone/sensorD.php",
+                    data: {d_building: building,
+                            d_room: roomno},
+                    dataType: "json",
+                    success: function(json){
+                        //******************************* CHART MAKER
+                        $('#chart1').html("");
+                        var data = data.d_hum;
+                       // var data = [30, 40, 50, 60, 70, 60, 50, 40, 30, 20, 40];
+                        var sineRenderer = function() {
+                            var plot = [[]];
+                            var j = 0;
+                            for (var i=0; i<10; i++) {
+                                plot[0].push([j, data[i]]);
+                                j++;
+                            }   
+                            return plot;
+                        };
+                
+                        // we have an empty data array here, but use the "dataRenderer"
+                        // option to tell the plot to get data from our renderer.
+                        var plot1 = $.jqplot('chart1',[],{
+                            title: "<font size='6pt'><b>BPM CHART</b></font></br>&nbsp",
+                            dataRenderer: sineRenderer,   
+                                
+                            axes:{ 
+                                xaxis:{ 
+                                    min: -1, 
+                                    max: 10, 
+                                    numberTicks : 12,
+                                    drawMajorGridlines: true,
+                                    pad: 20,
+                                    ticks: [[-1,""],[0,"<b>10s ago</b>"],[1,""],[2,""],[3,"<b>&lt&lt</b>"],[4,""],
+                                        [5,""],[6,"<b>&lt&lt</b>"],[7,""],[8,""],[9,"<b>Present</b>"],[10,""]]
+                                },
+                                yaxis:{ 
+                                    //label: 'BPM',
+                                    min: 30, 
+                                    max: 110, 
+                                    numberTicks : 9, 
+                                    drawMajorGridlines: true,
+                                    ticks: [[30,""],[40,"40"],[50,""],[60,""],
+                                        [70,""],[80,""],[90,""],[100,"100"],[110,""]],
+                                    tickOptions:{fontString : '%1f'}
+                                }
+                            },
+                            series:[{color:'#F42941'}]
+                        });
+
+                        //CHART MAKER********************************
+                        /*
+                        for(var i in json.d_temp){
+                            document.getElementById(json.r_roomno[i]+"_status").className = "stat2";
+
+                        }
+                        for(var i in json2.r_roomno){
+                            document.getElementById(json.r_roomno[i]+"_status").className = "stat1";
+                            if(json2.r_light[i] == 1){
+                                document.getElementById(json2.r_roomno[i]+"_light").src = 'img/light_on.png';
+                            }else{
+                                document.getElementById(json2.r_roomno[i]+"_light").src = 'img/light_off.png';
+                            }
+                            if(json2.r_door[i] == 1){
+                                document.getElementById(json2.r_roomno[i]+"_door").src = 'img/door_open.png';
+                            }else{
+                                document.getElementById(json2.r_roomno[i]+"_door").src = 'img/door_close.png';
+                            }
+                            document.getElementById(json2.r_roomno[i]+"_temp").innerHTML = json2.r_temp[i];
+                            document.getElementById(json2.r_roomno[i]+"_hum").innerHTML = json2.r_hum[i];
+                        }
+                        */
+
+                    },
+                    error: function failCallBk(XMKHttpRequest, textStatus, errorThrown){
+                        console.log(XMKHttpRequest.status + " " + XMKHttpRequest.statusText + " " + errorThrown + "\n" +"An error occured while processing your request. Please try again.");
+                    } 
+                });
+                
+            
             }
             
         </script>
         
         <div data-role="page" id="LoginPage">
-            
-            <img src="img/building2.png" style="z-index:2; position: absolute; height:20%; width:30%; top: 12%; left: 35%;"></img>
-            <div class="blink"><img src="img/building2_3.png" style="z-index:3; position: absolute; height:20%; width:30%; left: 35%; top: 12%;"></img></div>
-            <div class="container" style="z-index:1; background-color:#f8f8f8; position: absolute; width: 80%; height: 50%; left: 10%; top: 30%; padding:0px">
-                <h2 style="padding:16px;"><center>App name</center></h2>
-                <ul class="nav nav-tabs">
-                    <li class="active" style="width:50%;"><a data-toggle="tab" href="#Login">Login</a></li>
-                    <li style="width:50%;"><a data-toggle="tab" href="#Register">Register</a></li>
-                </ul>
-
-                <div class="tab-content" style="padding:10px;">
-                    <div id="Login" class="tab-pane fade in active">
-                        
-                            <table>
-                                <tr style="padding:0px;">
-                                    <td style="padding:0px;"><input type="text" id="email" placeholder="Email Address" value="seongjo03@naver.com"></input></td>
-                                </tr>
-                                <tr style="padding:0px;">
-                                    <td style="width:1000px;"><input type="password" id="pass" placeholder="Password" value="1234"></input></td>
-                                </tr>
-                                <tr>
-                                    
-                                    <td>
-                                    <button id="loginBtn" style="font-family: 'Times New Roman'; color: #f8f8f8; text-shadow:0 0 0; background: #006a60;">Login</button>
-                                    
-                                    </td>
-                                </tr>
-                            </table>
-                        
-                    </div>
-                    <div id="Register" class="tab-pane fade">
-                        <p><center>Register Page.</center></p>
-                    </div>
-                </div>
+            <img src="img/header_bar.png" style="position: absolute; top:0; height:8%; width:100%">
+            <img src="img/login_bg.png" style="position: absolute; height: 45%; bottom:0;"> 
+            <img src="img/login_icon.png" style="position: absolute; width: 20%; left:40%; top:30%;">
+            <div style="position: absolute; top:11%; left:6%;">
+                <p style="color:white; font-family:'Leelawadee'; font-size:20pt;">SMART<br>BUILDING</p>
             </div>
+            
+            <table style="position: absolute; top: 47%; left: 15%; width: 70%;">
+                <tr>
+                    <td style="color:white; font-family:'Leelawadee'; font-size:10pt;">ID<br>
+                        <input id="id" type="text" value="seongjo03" style="position:absolute; background-color:#ffffff; color:#356d6e; font-family: 'Leelawadee'; font-size: 10px;  width: 100%;"></input>
+                        <br>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="color:white; font-family:'Leelawadee'; font-size:10pt;">PASSWORD<br>
+                        <input id="pass" type="password" value="1234" style="position:absolute; background-color:#ffffff; color:#356d6e; font-family: 'Leelawadee'; font-size: 10px;  width: 100%;"></input>
+                        <br><br>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input id="loginBtn" data-role="none" type="button" value="Login" style="position:absolute; background-color:#356d6e; color:#ffffff; font-family: 'Leelawadee'; font-size: 10px; border: 0; padding: 7px; width : 20%; right:0;"></input>
+                    </td>
+                </tr>
+            </table>
         </div>
         
         
         <!-- Building Choose page**************************** -->
-        <div data-role="page" id="bcpage" style="background-color:#f1f1f1;">
+        <div data-role="page" id="bcpage">
+        
             
             
             <div id="myCarousel" class="carousel slide" data-ride="carousel" style="position: absolute; top: 30%; width:100%;">
@@ -452,9 +568,11 @@
                 </div>
 
                 <!-- Left and right controls -->
-                <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+                <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+                
                     <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
                     <span class="sr-only">Previous</span>
+                    
                 </a>
                 <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
                     <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
@@ -536,15 +654,19 @@
                 </div>
                 -->
             </div>
+            
         </div>
         
         <!-- Room Info page**************************** -->
         <div data-role="page" id="RoomInfoPage">
+        
             <div class="container" id="roominfo" style="background-color: #f1f1f1; margin:20px; padding-bottom:10px; font-family: 'Times New Roman', Times, serif;">
-            <!--
-                <h3><center>A001</center></h3>
-                <div align="center">
-                    <img src="img/sample_chart.png"></img>
+            
+                
+            
+                <h3 id="detail_room"></h3>
+                <div align="center" id="chart1">
+                    <!--<img src="img/sample_chart.png"></img>-->
                 </div>
                 <table align="center">
                     <tr align="center">
@@ -556,8 +678,10 @@
                         <td style="padding:10px;"> On </td>
                     </tr>
                 </table>
+            
             </div>
-            -->
+            
+            <div id="hihi"></div>
         </div>
         
         <script type="text/javascript" src="cordova.js"></script>

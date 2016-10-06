@@ -33,4 +33,7 @@
     <allow-intent href="geo:*" />
     <allow-intent href="market:*" />
     <preference name="loglevel" value="DEBUG" />
+    <feature name="PowerManagement">
+        <param name="android-package" value="com.simplec.phonegap.plugins.powermanagement.PowerManagement" />
+    </feature>
 </widget>

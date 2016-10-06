@@ -18,6 +18,9 @@
         },
         "cordova-plugin-fcm": {
             "PACKAGE_NAME": "com.app.capstone"
+        },
+        "cordova-plugin-powermanagement": {
+            "PACKAGE_NAME": "com.app.capstone"
         }
     },
     "dependent_plugins": {}
