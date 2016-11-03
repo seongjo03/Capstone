@@ -15,14 +15,6 @@
         "is_top_level": true,
         "variables": {}
     },
-    "cordova-plugin-firebase": {
-        "source": {
-            "type": "registry",
-            "id": "cordova-plugin-firebase"
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
     "cordova-plugin-fcm": {
         "source": {
             "type": "registry",
@@ -35,6 +27,33 @@
         "source": {
             "type": "registry",
             "id": "cordova-plugin-powermanagement"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-screen-orientation": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-screen-orientation"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-facebook4": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-facebook4"
+        },
+        "is_top_level": true,
+        "variables": {
+            "APP_ID": "918236774974812",
+            "APP_NAME": "capstone"
+        }
+    },
+    "cordova-plugin-sim": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-sim"
         },
         "is_top_level": true,
         "variables": {}

@@ -8,13 +8,27 @@
         <param name="android-package" value="org.apache.cordova.splashscreen.SplashScreen" />
         <param name="onload" value="true" />
     </feature>
-    <feature name="FirebasePlugin">
-        <param name="android-package" value="org.apache.cordova.firebase.FirebasePlugin" />
-        <param name="onload" value="true" />
-    </feature>
     <feature name="FCMPlugin">
         <param name="android-package" value="com.gae.scaffolder.plugin.FCMPlugin" />
         <param name="onload" value="true" />
+    </feature>
+    <feature name="PowerManagement">
+        <param name="android-package" value="com.simplec.phonegap.plugins.powermanagement.PowerManagement" />
+    </feature>
+    <feature name="YoikScreenOrientation">
+        <param name="android-package" value="net.yoik.cordova.plugins.screenorientation.YoikScreenOrientation" />
+    </feature>
+    <feature name="FacebookConnectPlugin">
+        <param name="android-package" value="org.apache.cordova.facebook.ConnectPlugin" />
+        <param name="onload" value="true" />
+    </feature>
+    <access origin="https://m.facebook.com" />
+    <access origin="https://graph.facebook.com" />
+    <access origin="https://api.facebook.com" />
+    <access origin="https://*.fbcdn.net" />
+    <access origin="https://*.akamaihd.net" />
+    <feature name="Sim">
+        <param name="android-package" value="com.pbakondy.Sim" />
     </feature>
     <name>capstone</name>
     <description>
@@ -33,7 +47,6 @@
     <allow-intent href="geo:*" />
     <allow-intent href="market:*" />
     <preference name="loglevel" value="DEBUG" />
-    <feature name="PowerManagement">
-        <param name="android-package" value="com.simplec.phonegap.plugins.powermanagement.PowerManagement" />
-    </feature>
+    <preference name="android-minSdkVersion" value="15" />
+    <preference name="ShowSplashScreenSpinner" value="false" />
 </widget>

@@ -1,0 +1,182 @@
+<html>
+    <head>
+        
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+        
+        <script src="js/lib/jquery-1.12.2.min.js"></script>
+        <script src="https://code.highcharts.com/highcharts.js"></script>
+        <script src="https://code.highcharts.com/modules/exporting.js"></script>
+
+
+
+        <!--
+        <script src="xml2json.js"></script>
+        <script src="jquery.xdomainajax.js"></script>
+        -->
+        
+        
+		
+        <title>Hello World</title>
+		<style>
+            body{
+                background-color : #86ced1;
+            }
+		</style>
+        
+        
+    </head>
+    
+    <script type="text/javascript">
+        $(document).ready(function () {
+            Highcharts.setOptions({
+                global: {
+                    useUTC: false
+                }
+                ,colors: ['#d15c5c', '#5364d9']
+        });
+        
+        
+        $('#container').highcharts({    
+            chart: {
+                type: 'spline',
+                animation: Highcharts.svg, // don't animate in old IE
+                marginRight: 50,
+                events: {
+                    load: function () {
+
+                        // set up the updating of the chart each second
+                        var series_hum = this.series[0];
+                        var series_temp = this.series[1];
+                        
+
+                        setInterval(function () {
+                            var x = (new Date()).getTime(), // current time
+                                y = 20 + Math.random()*10,
+                                y2 = 55 + Math.random()*10;
+                            
+                            series_hum.addPoint([x, y], false, true); 
+                            series_temp.addPoint([x, y2], true, true);
+                        }, 1000);
+                    }
+                },
+                backgroundColor:'rgba(255, 250, 255, 0.1)',
+                style: { fontFamily: 'Leewlawadee'
+                        , fontSize: '17px' 
+                        , textShadow: true
+                        //, fontSize: '17px' 
+                        
+                        }
+            },
+            title: {
+                text: 'Room Name_Live random data'
+            },
+            xAxis: {
+                type: 'datetime',
+                tickPixelInterval: 100
+            },
+            yAxis: [{ // Primary yAxis
+            		//min : 0.0,
+            		//max : 1,
+                labels: {
+                  style: {
+                  	color : Highcharts.getOptions().colors[0]
+                  }
+                  //y: 16
+                },
+                title: {
+                    text: 'Temp',
+                  style: {
+                  	color : Highcharts.getOptions().colors[0]
+                  }
+                },
+                plotLines: [{
+                    value: 0,
+                    width: 1,
+                    color: Highcharts.getOptions().colors[0]
+                }]
+            },{ // Secondary yAxis
+            		title : 'Humidity',
+            		//min : 40,
+            		//max : 90,
+                opposite : true,
+                labels: {
+                	align : 'left',
+                  x: 5,
+                  style: {
+                  	color : Highcharts.getOptions().colors[1]
+                  }
+                  //y: 16
+                },
+                title: {
+                    text: 'Hum',
+                  style: {
+                  	color : Highcharts.getOptions().colors[1]
+                  }
+                },
+                plotLines: [{
+                    value: 0,
+                    width: 1,
+                    color: Highcharts.getOptions().colors[1]
+                }]
+            }],
+            tooltip: {
+                formatter: function () {
+                    return '<b>' + this.series.name + '</b><br/>' +
+                        Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' +
+                        Highcharts.numberFormat(this.y, 2);
+                },
+                //backgroundColor: "rgba(255,255,255,0.8)",
+            },
+            legend: {
+                enabled: false
+            },
+            exporting: {
+                enabled: false
+            },
+            series: [{
+                name: 'Random data',
+                yAxis: 0,
+                color: Highcharts.getOptions().colors[0],
+                data: (function () {
+                    // generate an array of random data
+                    var data = [],
+                        time = (new Date()).getTime(),
+                        i;
+
+                    for (i = -9; i <= 0; i += 1) {
+                        data.push({
+                            x: time + i * 1000,
+                            y: 20 + Math.random()*10
+                        });
+                    }
+                    return data;
+                }())
+            },{
+                name: 'Random data2',
+                yAxis: 1,
+                color: Highcharts.getOptions().colors[1],
+                data: (function () {
+                    // generate an array of random data
+                    var data = [],
+                        time = (new Date()).getTime(),
+                        i;
+
+                    for (i = -9; i <= 0; i += 1) {
+                        data.push({
+                            x: time + i * 1000,
+                            y: 55 + Math.random()*10
+                        });
+                    }
+                    return data;
+                }())
+            }]
+        });
+    });
+    </script>
+        
+    <body>
+        
+        <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+        
+    </body>
+</html>
