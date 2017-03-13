@@ -1,0 +1,908 @@
+<html>
+<head>
+
+    <meta name="viewport"
+          content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <script src="js/lib/jquery-1.12.2.min.js"></script>
+    <script src="js/lib/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css">
+
+    <script src="js/lib/jquery.mobile-1.4.5.min.js"></script>
+
+    <script src="js/lib/Highcharts-5.0.0/js/highcharts.js"></script>
+    <script src="js/lib/Highcharts-5.0.0/js/modules/exporting.js"></script>
+
+
+    <title>Hello World</title>
+    <style>
+            .ui-page{
+                background-color : #86ced1;
+            }
+            .ui-btn{
+                padding: 0px;
+                font-family : 'Leelawadee';
+            }
+            .ui-btn-corner-all{
+                border-radius:0em;
+            }
+            body{
+                background-color : #86ced1;
+            }
+            .stat1{
+                width:32%; border:solid; color:#52989d; display:inline-table; margin-right:3px; margin-bottom:3px; text-shadow:0 0 0;
+            }
+            .stat2{
+                width:32%; border:solid; background-color:#52989d; color:#52989d; display:inline-table; margin-right:3px; margin-bottom:3px; text-shadow:0 0 0;
+            }\
+            p{
+                font-family: 'Leelawadee'; text-shadow:0 0 0;
+            }
+            td{
+                font-family: 'Leelawadee';
+                text-shadow:0 0 0;
+                color: white;
+            }
+            th{
+                font-family: 'Leelawadee';
+                text-shadow:0 0 0;
+                color: white;
+            }
+
+            h4{
+                font-family: 'Leelawadee';
+                text-shadow:0 0 0;
+                text-align: center;
+                color: white;
+            }
+
+
+    </style>
+
+
+</head>
+
+<script type="text/javascript">
+
+</script>
+
+<body>
+
+
+<!-- Login page**************************** -->
+
+    <script type="text/javascript">
+        var intervalRoomInfo;
+        var listinterval = 5000;
+
+        var intervalDetail;
+        var detailinterval = 30000;
+        var tickinterval = 150;
+
+        var intervalDetail2;
+
+        function JSONtoString(object) {
+            var results = [];
+            for (var property in object) {
+                var value = object[property];
+                if (value)
+                    results.push(property.toString() + ': ' + value);
+            }
+
+            return '{' + results.join(', ') + '}';
+        }
+
+        $(document).ready(function () {
+
+            var fbLoginSuccess = function (userData) {
+                //console.log("UserInfo: " + JSONtoString(userData));
+                console.log("UserInfo: " + JSONtoString(userData['authResponse']));
+            }
+
+            $('#FBloginBtn').click(function(){
+                    //console.log("merong");
+                facebookConnectPlugin.login(
+                    ["public_profile"],
+                    fbLoginSuccess,
+                    function loginError(error){
+                        console.log(JSONtoString(error));
+                    }
+                );
+            });
+
+            function loginSuccess(){
+                var source1 = "";
+                var source2 = "";
+                                source2 = source2
+                                    +"<div class='item active' onclick='javascript:buildingInfo(\"" + "1" + "\", \"" + "Lecture Building A" + "\")' style='height: 100%;'>"
+                                    +"<table style='height:25%; margin-left:3%;'>"
+                                    +"<tr style='vertical-align:top;'>"
+                                    +"<td>"
+                                    +"<p style='font-size:17pt'>" + "Lecture Building A" + "</p>"
+                                    +"<p style='font-size:10pt; text-align:left;'>" + "Jochiwon" + "</p>"
+                                    +"</td>"
+                                    +"</tr>"
+                                    +"</table>"
+                                    +"<center><img src='img/building_a.png' style='position:relative; height:45%;'></center>"
+                                    +"</div>";
+
+
+                        element = document.getElementById('carousel-indicators');
+                        var searchThis = element.innerHTML;
+
+                    $('#carousel-indicators').html(source1);
+                    $('#carousel-inner').html(source2);
+
+                    $.mobile.changePage( "#bcpage",
+                        { transition: "slide",
+                        changeHash: true,
+                        reverse : false }
+                    );
+            }
+
+            $('#loginBtn').click(function() {
+ 		loginSuccess();
+            });
+        });
+
+        function buildingInfo(id, building){
+            clearInterval(intervalDetail);
+            clearInterval(intervalDetail2);
+            clearInterval(intervalRoomInfo);
+            var rooms = [];
+
+		var json = {
+		    R_ROOMNAME : ["101", "102", "201", "202"],
+		    R_FLOOR : ["1", "2"]
+		};
+
+                    var strfl = json.R_ROOMNAME[0] + "";
+                    var floor = json.R_FLOOR[0];
+                    var collapseno = "collapse"+floor;
+
+                        var source = ""
+                            + "<img src='img/header_bar.png' style='position: relative; top:0; height:8%; width:100%'><br><br>"
+                            + "<center><img src='img/" + "building_a" + ".png' style='position:relative; height:30%;'></center>"
+                            + "<p style='padding-left : 3%; margin-top:25px; margin-bottom:25px; font-size:17pt'>" + "Lecture Building A" + "</p>"
+                            +"<div class='accordion-group'>"
+                            +"<div class='accordion-heading'>"
+                            +"<label style='width:100%; height:2px; background-color:#52989d; margin:0;'/>"
+                            +"<table class='accordion-toggle' data-toggle='collapse' href='#" + collapseno + "' style='width:100%; background-color:#6cb3b7; font-color: white; margin:0; height:60px;'><tr><td style='padding-left:3%; font-size:16pt'>" + floor + "</tr></td></table>"
+                            +"</div>"
+                            +"<div id='" + collapseno + "' class='accordion-body collapse in'>"
+                            +"<div class='accordion-inner'>";
+
+                        for(var i in json.R_ROOMNAME){
+                            //rooms.push(json.R_ROOMNAME[i]);
+                            if (json.R_FLOOR[i] != floor){
+
+                                floor = json.R_FLOOR[i];
+                                collapseno = "collapse"+floor;
+
+                                source = source
+                                    +"</div></div></div>"
+                                    +"<div class='accordion-group'>"
+                                    +"<div class='accordion-heading'>"
+                                    +"<label style='width:100%; height:2px; background-color:#52989d; margin:0;'/>"
+                                    +"<table class='accordion-toggle' data-toggle='collapse' href='#" + collapseno + "' style='width:100%; background-color:#6cb3b7; font-color: white; margin:0; height:60px'><tr><td style='padding-left:3%; font-size:16pt'>" + floor + "</tr></td></table>"
+                                    +"</div>"
+                                    +"<div id='" + collapseno + "' class='accordion-body collapse in'>"
+                                    +"<div class='accordion-inner'>"
+
+                                    //+"<table id='" + json.R_ROOMNAME[i] + "_status' class='stat1' onclick='detail(\"+"Lecture Building A"+"\", "+json.R_ROOMNAME[i]+");' style='margin:2px'>"
+                                    +"<table id='" + json.R_ROOMNAME[i] + "_status' class='stat2' onclick='detail(\""+"1"+"\", \""+json.R_ROOMNAME[i]+"\");' style='margin:2px;'>"
+                                    +   "<tr>"
+                                    +       "<th colspan='2'><center>" + json.R_ROOMNAME[i] + "</center></th>"
+                                    +   "</tr>"
+                                    +   "<tr>"
+                                    +        "<td><center><img id='" + json.R_ROOMNAME[i] + "_light' src='img/light_disc.png' style='width:45%;'></center></td>"
+                                    +        "<td><center><img id='" + json.R_ROOMNAME[i] + "_door' src='img/door_disc.png' style='width:45%;'></center></td>"
+                                    +   "</tr>"
+                                    +   "<tr align='center'>"
+                                    +        "<td>Temp.</td>"
+                                    +        "<td id='" + json.R_ROOMNAME[i] + "_temp'>no data</td>"
+                                    +    "</tr>"
+                                    +    "<tr align='center'>"
+                                    +        "<td>Hum.</td>"
+                                    +        "<td id='" + json.R_ROOMNAME[i] + "_hum'>no data</td>"
+                                    +    "</tr>"
+                                    +"</table>";
+
+                            }else{
+                                source = source
+                                    //+"<a href='#RoomInfoPage' style='font-weight:normal; color:black; text-decoration:none;'>"
+                                    +"<table id='" + json.R_ROOMNAME[i] + "_status' class='stat2' onclick='detail(\""+"1"+"\", \""+json.R_ROOMNAME[i]+"\");' style='margin:2px;'>"
+                                    +   "<tr>"
+                                    +       "<th colspan='2'><center>" + json.R_ROOMNAME[i] + "</center></th>"
+                                    +   "</tr>"
+                                    +   "<tr>"
+                                    +        "<td><center><img id='" + json.R_ROOMNAME[i] + "_light' src='img/light_disc.png' style='width:45%;'></center></td>"
+                                    +        "<td><center><img id='" + json.R_ROOMNAME[i] + "_door' src='img/door_disc.png' style='width:45%;'></center></td>"
+                                    +   "</tr>"
+                                    +   "<tr align='center'>"
+                                    +        "<td>Temp.</td>"
+                                    +        "<td id='" + json.R_ROOMNAME[i] + "_temp'>no data</td>"
+                                    +    "</tr>"
+                                    +    "<tr align='center'>"
+                                    +        "<td>Hum.</td>"
+                                    +        "<td id='" + json.R_ROOMNAME[i] + "_hum'>no data</td>"
+                                    +    "</tr>"
+                                    +"</table>";
+                                    //+"</a>";
+                            }
+
+                        }
+                        
+                        source = source + "</div></div></div></div><label style='width:100%; background-color:#73babe; height:2px;'/>";
+
+                    $('#buildinginfo').html(source);
+
+                    element = document.getElementById('buildinginfo');
+                    var searchThis = element.innerHTML;
+                    //alert(searchThis);
+                    //alert(tester);
+
+                    roomreload(id, json);
+
+                    $.mobile.changePage( "#BuildingInfoPage",
+                        { transition: "slide",
+                            changeHash: true,
+                            reverse :false }
+                    );
+
+            
+            function roomreload(building, json){
+		var json2 = {
+		    R_ROOM : ["101","101","101","101",
+				"102","102","102","102",
+				"201","201","201","201",
+				"202","202","202","202"],
+		    R_ID : ["1","2","4","5",
+				"1","2","4","5",
+				"1","2","4","5",
+				"1","2","4","5"],
+		    R_VALUE : ["13.66","62.55","0","0",
+				"14,24","61.61","0","1",
+				"13.82","62.86","1","0",
+				"13.21","63.11","1","1"]
+		};   
+                        for(var i in json.R_ROOMNAME){
+                            document.getElementById(json.R_ROOMNAME[i]+"_status").className = "stat2";
+                            //console.log("SET " + json.R_ROOMNAME[i] + " OFF");
+                        }
+                        
+                        for(var i in json2.R_ROOM){
+                        
+                            document.getElementById(json2.R_ROOM[i]+"_status").className = "stat1";
+                            
+
+                            switch(json2.R_ID[i]){
+                                case "1" :
+                                    var strArray = json2.R_VALUE[i].split('.');
+                                    document.getElementById(json2.R_ROOM[i]+"_temp").innerHTML = strArray[0] + "." + strArray[1].substring(0,2) + "c";
+                                    break;
+                                case "2" :
+                                    var strArray = json2.R_VALUE[i].split('.');
+                                    document.getElementById(json2.R_ROOM[i]+"_hum").innerHTML = strArray[0] + "." + strArray[1].substring(0,2) + "%";
+                                    break;
+                                case "4" :
+                                    if(json2.R_VALUE == 1) document.getElementById(json2.R_ROOM[i]+"_door").src = 'img/door_open.png';
+                                    else document.getElementById(json2.R_ROOM[i]+"_door").src = 'img/door_close.png';
+                                    break;
+                                case "5" :
+                                    //console.log("id : " + json2.R_ID[i] + "\nvalue : " + json2.R_VALUE[i] + "\n");
+                                    if(json2.R_VALUE[i] > 10) document.getElementById(json2.R_ROOM[i]+"_light").src = 'img/light_on.png';
+                                    else document.getElementById(json2.R_ROOM[i]+"_light").src = 'img/light_off.png';
+                                    break;
+                            }
+                        }
+            }
+
+        }
+
+        
+
+        function detail(building, roomno){
+            clearInterval(intervalDetail);
+            clearInterval(intervalDetail2);
+            clearInterval(intervalRoomInfo);
+
+
+            var source = "";
+
+            source = source
+                + "<h3 style='width:100%; background-color:rgba(255, 250, 255, 0.1); margin-bottom:0px;'><center><br>" + roomno + "<br><br></center></h3>"
+                + "<div align='center'>"
+                + "<div id='chart1' style='width:100%;'>"
+                + "</div>"
+                + "</div>"
+                + "<table align='center' style='width:100%; background-color:rgba(255, 250, 255, 0.1);'>"
+                + "<tr>"
+                + "<td style='padding:10px; width: 50%; text-align: right;'>Door State</td>"
+                + "<td id='detail_door' style='padding:10px; width: 50%; text-align: left;'></td>"
+                + "</tr>"
+                + "<tr>"
+                + "<td style='padding:10px; width: 50%; text-align: right;'>Light</td>"
+                + "<td id='detail_light' style='padding:10px; width: 50%; text-align: left;'></td>"
+                + "</tr>"
+                + "</table>";
+
+            document.getElementById('roominfo').innerHTML = source;
+
+
+            //document.getElementById('detail_room').innerHTML = "<center>" + building + "-" + roomno + "</center>";
+
+                    detailreload(building, roomno);
+                    $.mobile.changePage( "#RoomInfoPage",
+                    { transition: "slide",
+                        changeHash: false,
+                        reverse :false }
+                    ); 
+            
+
+            
+            
+        }
+
+        function setdetail(item, stat){
+            if (item == 4) {
+                if (stat == 1){
+                    document.getElementById("detail_door").innerHTML = "CLOSED";
+                    //console.log("setdetail(4, 1)\n");
+                }else{
+                    document.getElementById("detail_door").innerHTML = 'OPEN';
+                    //console.log("setdetail(4, 0)\n");
+                }
+            }else if (item == 5){
+                if (stat == 1){
+                    document.getElementById("detail_light").innerHTML = "ON";
+                    //console.log("setdetail(5, 1)\n");
+                }else{
+                    document.getElementById("detail_light").innerHTML = 'OFF';
+                    //console.log("setdetail(5, 0)\n");
+                }
+            }
+        }
+        function setData(building, roomno) {
+        
+            $.ajax({
+                url:"http://seongjo03.gonetis.com/capstone/sensorR2.php",
+                //url:"http://192.168.1.2/capstone/sensorR2.php",
+                type: "GET",
+                data: {d_building: building,
+                    d_roomno: roomno},
+                dataType: "json",
+                success: function(json){
+                    for(var i in json.R_ID){
+                        switch(json.R_ID[i]){
+                            case "4":
+                                if (json.R_VALUE[i] == 1) setdetail(4, 1)
+                                else setdetail(4, 0)
+                                break;
+
+                            case "5":
+                                //console.log("case 5 : " + json2.R_VALUE[i] + "\n");
+                                if (json.R_VALUE[i] > 10) setdetail(5, 1);
+                                else setdetail(5, 0);
+                                break;
+                        }
+                    }
+                    //console.log(JSON.stringify(json));
+
+                },
+                error: function failCallBk(XMKHttpRequest, textStatus, errorThrown){
+                    console.log(XMKHttpRequest.status + " " + XMKHttpRequest.statusText + " " + errorThrown + "\n" +"An error occured while processing your request. Please try again.");
+                }
+            });
+        }
+
+        function detailreload(building, roomno){
+
+            clearInterval(intervalDetail);
+            clearInterval(intervalDetail2);
+            clearInterval(intervalRoomInfo);
+            document.getElementById("detail_door").innerHTML = "<div style='color:#52989d;'>DISCONNECTED</div>";
+            document.getElementById("detail_light").innerHTML = "<div style='color:#52989d;'>DISCONNECTED</div>";
+                
+            $.ajax({
+                url:"http://seongjo03.gonetis.com/capstone/sensorR3.php",
+                //url:"http://192.168.1.2/capstone/sensorR3.php",
+                type: "GET",
+                data: {d_building: building,
+                    d_roomno: roomno},
+                dataType: "json",
+                success: function(json2){
+                    //******************************* CHART MAKER
+                    Highcharts.setOptions({
+                        global: {
+                            useUTC: false
+                        },
+                        colors: ['#d15c5c', '#5364d9']
+                    });
+
+                    $('#chart1').highcharts({
+
+                        chart: {
+                            type: 'spline',
+                            animation: Highcharts.svg, // don't animate in old IE
+                            marginRight: 50,
+                            events: {
+                                load: function () {
+
+                                    // set up the updating of the chart each second
+                                    var series_hum = this.series[0];
+                                    var series_temp = this.series[1];
+                                    
+                                    setData(building, roomno);
+                                    
+                                    intervalDetail2 = setInterval(function() {
+                                    
+                                        var set = {};
+                                        var x = (new Date()).getTime(), // current time
+                                            //y = 23 + Math.random()*2,
+                                            //y2 = 55 + Math.random()*2;
+                                            y, y2;
+
+                                        //this.series[0].addPoint([x, y], false, true);
+                                        //this.series[1].addPoint([x, y2], true,true);
+                                    
+                                        $.ajax({
+                                            url:"http://seongjo03.gonetis.com/capstone/sensorR2.php",
+                                            //url:"http://192.168.1.2/capstone/sensorR2.php",
+                                            type: "GET",
+                                            data: {d_building: building,
+                                                    d_roomno: roomno},
+                                            dataType: "json",
+                                            success: function(json){
+                                                for(var i in json.R_ID){
+                                                    switch(json.R_ID[i]){
+                                                    
+                                                        case "1":
+                                                            y = parseFloat(json.R_VALUE[i]);
+                                                            //console.log("y = " + json.R_VALUE[i]);
+                                                            break;
+                                                            
+                                                        case "2":
+                                                            y2 = parseFloat(json.R_VALUE[i]);
+                                                            //console.log("y2 = " + json.R_VALUE[i]);
+                                                            break;
+                                                       
+                                                        case "4":
+                                                            if (json.R_VALUE[i] == 1) setdetail(4, 1);
+                                                            else setdetail(4, 0);
+                                                            break;
+
+                                                        case "5":
+                                                            //console.log("case 5 : " + json2.R_VALUE[i] + "\n");
+                                                            if (json.R_VALUE[i] > 10) setdetail(5, 1);
+                                                            else setdetail(5, 0);
+                                                            break;
+                                                    }
+                                                }
+                                                //console.log(JSON.stringify(json));
+
+                                            },
+                                            error: function failCallBk(XMKHttpRequest, textStatus, errorThrown){
+                                                console.log(XMKHttpRequest.status + " " + XMKHttpRequest.statusText + " " + errorThrown + "\n" +"An error occured while processing your request. Please try again.");
+                                            }
+                                        }).done(function() {
+                                            series_hum.addPoint([x, y], false, true);
+                                            series_temp.addPoint([x, y2], true, true);
+                                        
+                                            //console.log("series_hum.addPoint(["+x+", "+y+"], false, true);");
+                                            //console.log("series_temp.addPoint(["+x+", "+y2+"], true, true);");
+                                        });
+                                    }, detailinterval);
+                                }
+                            },
+                            backgroundColor:'rgba(255, 250, 255, 0.1)',
+                            style: { fontFamily: 'Leewlawadee'
+                                , fontSize: '17px'
+                                , textShadow: true
+                                //, fontSize: '17px'
+
+                            }
+                        },
+                        title: {
+                            text: " "
+                        },
+                        xAxis: {
+                            type: 'datetime',
+                            tickPixelInterval: tickinterval
+                        },
+                        yAxis: [{ // Primary yAxis
+                                //min : 0.0,
+                                //max : 1,
+                                labels: {
+                                    style: {
+                                        color : Highcharts.getOptions().colors[0]
+                                    }
+                                //y: 16
+                                },
+                                title: {
+                                    text: 'Temp',
+                                    style: {
+                                        color : Highcharts.getOptions().colors[0]
+                                    }
+                                },
+                                plotLines: [{
+                                    value: 0,
+                                    width: 1,
+                                    color: Highcharts.getOptions().colors[0]
+                                }]
+                            },{ // Secondary yAxis
+                                title : 'Humidity',
+                                //min : 50,
+                                //max : 90,
+                                opposite : true,
+                                labels: {
+                                    align : 'left',
+                                    x: 5,
+                                    style: {
+                                        color : Highcharts.getOptions().colors[1]
+                                    }
+                                    //y: 16
+                                },
+                                title: {
+                                    text: 'Hum',
+                                    style: {
+                                        color : Highcharts.getOptions().colors[1]
+                                    }
+                                },
+                                plotLines: [{
+                                    value: 0,
+                                    width: 1,
+                                    color : Highcharts.getOptions().colors[1]
+                                }]
+                            }
+                        ],
+                        tooltip: {
+                            formatter: function () {
+                                return '<b>' + this.series.name + '</b><br/>' +
+                                    Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' +
+                                    Highcharts.numberFormat(this.y, 2);
+                                },
+                            //backgroundColor: "rgba(255,255,255,0.8)",
+                        },
+                        legend: {
+                            enabled: false
+                        },
+                        exporting: {
+                            enabled: false
+                        },
+                        series: [{
+                            name: 'Temperature',
+                            yAxis: 0,
+                            data: (function () {
+                                // generate an array of random data
+                                var data = [],
+                                    time = (new Date()).getTime(),
+                                    i;
+                                /*
+                                for (i = 0; i < 10; i ++) {
+                                    data.push({
+                                        //x: time + (i-10) * 1000 * 30,
+                                        x: time + (i-10) * 1000,
+                                        y: 23 - (Math.random()*0.3 * i)
+                                    });
+                                }
+                                */
+                                data.push({
+                                    x: time + (-9) * 1000,
+                                    y: 23
+                                });
+                                data.push({
+                                    x: time + (-8) * 1000,
+                                    y: 22.92
+                                });
+                                data.push({
+                                    x: time + (-7) * 1000,
+                                    y: 22.87
+                                });
+                                data.push({
+                                    x: time + (-6) * 1000,
+                                    y: 22.86
+                                });
+                                data.push({
+                                    x: time + (-5) * 1000,
+                                    y: 22.79
+                                });
+                                data.push({
+                                    x: time + (-4) * 1000,
+                                    y: 22.80
+                                });
+                                data.push({
+                                    x: time + (-3) * 1000,
+                                    y: 22.78
+                                });
+                                data.push({
+                                    x: time + (-2) * 1000,
+                                    y: 22.78
+                                });
+                                data.push({
+                                    x: time + (-1) * 1000,
+                                    y: 22.76
+                                });
+                                data.push({
+                                    x: time,
+                                    y: 22.77
+                                });
+                                return data;
+                            }())
+                        },{
+                            name: 'Humidity',
+                            yAxis: 1,
+                            data: (function () {
+                                // generate an array of random data
+                                var data = [],
+                                    time = (new Date()).getTime(),
+                                    i;
+                                    /*
+                                for (i = 0; i < 10; i ++) {
+                                    data.push({
+                                        //x: time + (i-10) * 1000 * 30,
+                                        x: time + (i-10) * 1000,
+                                        //y: 55 + Math.random()*0.3
+                                        y: 55 - (Math.random()*0.3 * i)
+                                    });
+                                }
+                                */
+                                data.push({
+                                    x: time + (-9) * 1000,
+                                    y: 65
+                                });
+                                data.push({
+                                    x: time + (-8) * 1000,
+                                    y: 64.89
+                                });
+                                data.push({
+                                    x: time + (-7) * 1000,
+                                    y: 64.78
+                                });
+                                data.push({
+                                    x: time + (-6) * 1000,
+                                    y: 64.71
+                                });
+                                data.push({
+                                    x: time + (-5) * 1000,
+                                    y: 64.66
+                                });
+                                data.push({
+                                    x: time + (-4) * 1000,
+                                    y: 64.68
+                                });
+                                data.push({
+                                    x: time + (-3) * 1000,
+                                    y: 64.55
+                                });
+                                data.push({
+                                    x: time + (-2) * 1000,
+                                    y: 64.52
+                                });
+                                data.push({
+                                    x: time + (-1) * 1000,
+                                    y: 64.57
+                                });
+                                data.push({
+                                    x: time,
+                                    y: 64.56
+                                });
+                                
+                                return data;
+                            }())
+                        }]
+                    });
+                },
+                error: function failCallBk(XMKHttpRequest, textStatus, errorThrown){
+                    console.log(XMKHttpRequest.status + " " + XMKHttpRequest.statusText + " " + errorThrown + "\n" +"An error occured while processing your request. Please try again.");
+                }
+            });
+        }
+
+
+    </script>
+
+
+    <div data-role="page" id="LoginPage">
+        <img src="img/header_bar.png" style="position: absolute; top:0; height:8%; width:100%">
+        <img src="img/login_bg.png" style="position: absolute; height: 45%; bottom:0;">
+        <img src="img/login_icon.png" style="position: absolute; width: 20%; left:40%; top:30%;">
+        <div style="position: absolute; top:11%; left:6%;">
+            <p style="color:white; font-family:'Leelawadee'; font-size:20pt;">SMART<br>BUILDING</p>
+        </div>
+
+        <table style="position: absolute; top: 47%; left: 15%; width: 70%;">
+            <tr>
+                <td style="color:white; font-family:'Leelawadee'; font-size:10pt;">ID
+                    <input id="id" type="text"
+                           style="position:absolute; background-color:#ffffff; color:#356d6e; font-family: 'Leelawadee'; font-size: 10px;  width: 100%;">
+                    <br>
+                </td>
+            </tr>
+            <tr>
+                <td style="color:white; font-family:'Leelawadee'; font-size:10pt;">PASSWORD<br>
+                    <input id="pass" type="password"
+                           style="position:absolute; background-color:#ffffff; color:#356d6e; font-family: 'Leelawadee'; font-size: 10px;  width: 100%;">
+                    <br><br>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input id="FBloginBtn" data-role="none" type="button" value="FB"
+                           style="position:absolute; background-color:#4167b2; color:#ffffff; font-family: 'Leelawadee'; font-size: 10px; border: 0; padding: 7px; width : 20%; right:20%;">
+                    <input id="loginBtn" data-role="none" type="button" value="Login"
+                           style="position:absolute; background-color:#356d6e; color:#ffffff; font-family: 'Leelawadee'; font-size: 10px; border: 0; padding: 7px; width : 20%; right:0;">
+                </td>
+            </tr>
+        </table>
+    </div>
+
+
+    <!-- Building Choose page**************************** -->
+    <div data-role="page" id="bcpage">
+        <script>
+            $('#myCarousel').bind('slide.bs.carousel', function (e) {
+                console.log('slide event!');
+            });
+        </script>
+
+        <div id="myCarousel" class="carousel slide" data-ride="carousel"
+             style="position: absolute; height: 100%; width:100%;">
+            <img src="img/header_bar.png" style="position: absolute; top:0; height:8%; width:100%">
+
+            <!-- Indicators -->
+            <ol class="carousel-indicators" id="carousel-indicators" style="top:80%;">
+                <!--
+                    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                    <li data-target="#myCarousel" data-slide-to="1"></li>
+                    -->
+            </ol>
+
+            <!-- Wrapper for slides -->
+            <div class="carousel-inner" id="carousel-inner" role="listbox"
+                 style="position:absolute; top:8%; height:92%;">
+                <!--
+                    <div class="item active">
+                        <a href="#BuildingInfoPage">
+                            <img src="img/Building_A.jpg" alt="Building_A">
+                            <div class="carousel-caption">
+                                <h3>Lecture Building A</h3>
+                                <p>Cultural studies</p>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="item">
+                        <a href="#BuildingInfoPage">
+                            <img src="img/Building_B.jpg" alt="Building_B">
+                            <div class="carousel-caption">
+                                <h3>Lecture Building B</h3>
+                                <p></p>
+                            </div>
+                        </a>
+                    </div>
+                    -->
+            </div>
+
+            <!-- Left and right controls -->
+            <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+
+                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+
+            </a>
+            <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+
+
+    </div>
+
+    <!-- Building Info page**************************** -->
+    <div data-role="page" id="BuildingInfoPage">
+
+        <div class="container" id="buildinginfo"
+             style="position:absolute; font-family: 'Leelawadee'; text-shadow: 0 0 0; color : white; padding:0; width:100%;">
+
+                <h2>Lecture Building A</h2>
+                <div class="accordion" id="accordion2">
+                    <div class="accordion-group">
+                        <div class="accordion-heading">
+                            <a class="accordion-toggle" data-toggle="collapse" href="#collapseOne">
+                                0F
+                            </a>
+                        </div>
+                        <div id="collapseOne" class="accordion-body collapse in">
+                            <div class="accordion-inner">
+                                <a href="#RoomInfoPage" style="font-weight:normal; color:black; text-decoration:none;">
+                                    <table style="width:32%; border:solid; background-color:white; display:inline-table; margin-bottom:3px">
+                                        <tr>
+                                            <th colspan="2"><center>A001</center></th>
+                                        </tr>
+                                        <tr>
+                                            <td><center><img src="img/light_on.png" style="width:45%;"></center></td>
+                                            <td><center><img src="img/door_open.png" style="width:45%;"></center></td>
+                                        </tr>
+                                        <tr align="center">
+                                            <td>Temp.</td>
+                                            <td>60c</td>
+                                        </tr>
+                                        <tr align="center">
+                                            <td>Hum.</td>
+                                            <td>88%</td>
+                                        </tr>
+                                    </table>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+
+                    <div class="accordion-group">
+                        <div class="accordion-heading">
+                            <a class="accordion-toggle" data-toggle="collapse" href="#collapseTwo">
+                                1F
+                            </a>
+                        </div>
+                        <div id="collapseTwo" class="accordion-body collapse in">
+                            <a href="#RoomInfoPage" style="font-weight:normal; color:black; text-decoration:none;">
+                                <table style="width:32%; border:solid; background-color:white; display:inline-table; margin-bottom:3px">
+                                    <tr>
+                                        <th colspan="2"><center>A101</center></th>
+                                    </tr>
+                                    <tr>
+                                        <td><center><img src="img/light_off.png" style="width:45%;"></center></td>
+                                        <td><center><img src="img/door_close.png" style="width:45%;"></center></td>
+                                    </tr>
+                                    <tr align="center">
+                                        <td>Temp.</td>
+                                        <td>88c</td>
+                                    </tr>
+                                    <tr align="center">
+                                        <td>Hum.</td>
+                                        <td>28%</td>
+                                    </tr>
+                                </table>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+        </div>
+
+    </div>
+
+    <!-- Room Info page**************************** -->
+    <div data-role="page" id="RoomInfoPage">
+
+        <div class="container" id="roominfo" style="margin:20px; padding-bottom:10px; font-family: 'Leelawadee'; color: white; text-shadow: 0 0 0;">
+
+            <!--
+            <h3 id="detail_room"></h3>
+            <div align="center" id="chart1">
+                <img src="img/sample_chart.png">
+            </div>
+            <table align="center">
+                <tr align="center">
+                    <td style="padding:10px;"> Door State</td>
+                    <td id="detail_door" style="padding:10px;"> </td>
+                </tr>
+                <tr align="center">
+                    <td style="padding:10px;"> Light</td>
+                    <td id="detail_light" style="padding:10px;"> </td>
+                </tr>
+            </table>
+            -->
+        </div>
+
+        <div id="hihi"></div>
+    </div>
+
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+
+</body>
+</html>
