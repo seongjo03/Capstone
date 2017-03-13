@@ -1,31 +1,10 @@
 <html>
 <head>
 
-    <!--
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *">
-
-    <meta name="format-detection" content="telephone=no">
-    <meta name="msapplication-tap-highlight" content="no">
-    -->
     <meta name="viewport"
           content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
-    <!--<link rel="stylesheet" type="text/css" href="css/index.css">-->
-
-
-    <!-- Jquery mobile CDN*****************************
-    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
-    <script src="http://code.jquery.com/jquery-1.7.0.min.js"></script>
-    <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
-    -->
-
-    <!-- Bootstrap CDN*****************************
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-     -->
 
     <link rel="stylesheet" href="css/bootstrap.min.css">
-    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>-->
     <script src="js/lib/jquery-1.12.2.min.js"></script>
     <script src="js/lib/bootstrap.min.js"></script>
 
@@ -33,37 +12,8 @@
 
     <script src="js/lib/jquery.mobile-1.4.5.min.js"></script>
 
-
-    <!--<script src="js/lib/jquery.ajax-cross-origin.min.js"></script>-->
-
-    <!--
-    <script src="xml2json.js"></script>
-    <script src="jquery.xdomainajax.js"></script>
-    -->
-
-    <!--
-    <script language="javascript" type="text/javascript" src="js/lib/jqplot/excanvas.js"></script>
-    <script type="text/javascript" src="js/lib/jqplot/jquery.jqplot.js"></script>
-    <script type="text/javascript" src="js/lib/jqplot/plugins/jqplot.highlighter.js"></script>
-    <script type="text/javascript" src="js/lib/jqplot/plugins/jqplot.cursor.js"></script>
-    <script type="text/javascript" src="js/lib/jqplot/plugins/jqplot.dateAxisRenderer.js"></script>
-    <link rel="stylesheet" type="text/css" href="js/lib/jqplot/jquery.jqplot.css"/>
-
-    <script type="text/javascript" src="js/lib/jqplot/plugins/jqplot.logAxisRenderer.js"></script>
-    <script type="text/javascript"
-            src="js/lib/jqplot/plugins/jqplot.canvasTextRenderer.js"></script>
-    <script type="text/javascript"
-            src="js/lib/jqplot/plugins/jqplot.canvasAxisLabelRenderer.js"></script>
-    <script type="text/javascript"
-            src="js/lib/jqplot/plugins/jqplot.canvasAxisTickRenderer.js"></script>
-    <script type="text/javascript"
-            src="js/lib/jqplot/plugins/jqplot.categoryAxisRenderer.js"></script>
-    <script type="text/javascript" src="js/lib/jqplot/plugins/jqplot.barRenderer.js"></script>
-    -->
-
     <script src="js/lib/Highcharts-5.0.0/js/highcharts.js"></script>
     <script src="js/lib/Highcharts-5.0.0/js/modules/exporting.js"></script>
-    <!--<script src="https://code.highcharts.com/modules/exporting.js"></script>-->
 
 
     <title>Hello World</title>
@@ -107,7 +57,9 @@
                 text-align: center;
                 color: white;
             }
-
+		
+	    #chart {
+		width : 80%;
 
     </style>
 
@@ -128,7 +80,7 @@
         var listinterval = 5000;
 
         var intervalDetail;
-        var detailinterval = 30000;
+        var detailinterval = 5000;
         var tickinterval = 150;
 
         var intervalDetail2;
@@ -165,59 +117,23 @@
             function loginSuccess(){
                 var source1 = "";
                 var source2 = "";
-
-                $.ajax({
-                    url:"http://seongjo03.gonetis.com/capstone/buildings.php",
-                    //url:"http://192.168.1.2/capstone/buildings.php",
-                    success: function(json){
-                        var data = JSON.parse(json);
-
-                        for(var i in data.B_ALIAS){
-
-                            if (i == 0) {
-                                source1 = source1
-                                    + "<li data-target='#myCarousel' data-slide-to='" + i + "' class='active'></li>\n";
-
                                 source2 = source2
-                                    +"<div class='item active' onclick='javascript:buildingInfo(\"" + data.B_ID[i] + "\", \"" + data.B_ALIAS[i] + "\")' style='height: 100%;'>"
+                                    +"<div class='item active' onclick='javascript:buildingInfo(\"" + "1" + "\", \"" + "Lecture Building A" + "\")' style='height: 100%;'>"
                                     +"<table style='height:25%; margin-left:3%;'>"
                                     +"<tr style='vertical-align:top;'>"
                                     +"<td>"
-                                    +"<p style='font-size:17pt'>" + data.B_ALIAS[i] + "</p>"
-                                    +"<p style='font-size:10pt; text-align:left;'>" + data.B_ADDRESS[i] + "</p>"
+                                    +"<p style='font-size:17pt'>" + "Lecture Building A" + "</p>"
+                                    +"<p style='font-size:10pt; text-align:left;'>" + "Jochiwon" + "</p>"
                                     +"</td>"
                                     +"</tr>"
                                     +"</table>"
-                                    +"<center><img src='http://seongjo03.gonetis.com/capstone/buildingIMG/" + data.B_ALIAS[i] + ".png' alt='" + data.B_ALIAS[i] + "' style='position:relative; height:45%;'></center>"
+                                    +"<center><img src='img/building_a.png' style='position:relative; height:45%;'></center>"
                                     +"</div>";
 
-                            }else{
-                                source1 = source1
-                                    +"<li data-target='#myCarousel' data-slide-to='" + i + "'></li>\n";
-
-                                source2 = source2
-                                    +"<div class='item' onclick='javascript:buildingInfo(\"" + data.B_ID[i] + "\", \"" + data.B_ALIAS[i] + "\")' style='height: 100%;'>"
-                                    +"<table style='height:25%; margin-left:3%;'>"
-                                    +"<tr style='vertical-align:top;'>"
-                                    +"<td>"
-                                    +"<p style='font-size:17pt'>" + data.B_ALIAS[i] + "</p>"
-                                    +"<p style='font-size:10pt; text-align:left;'>" + data.B_ADDRESS[i] + "</p>"
-                                    +"</td>"
-                                    +"</tr>"
-                                    +"</table>"
-                                    +"<center><img src='http://seongjo03.gonetis.com/capstone/buildingIMG/" + data.B_ALIAS[i] + ".png' alt='" + data.B_ALIAS[i] + "' style='position:relative; height:45%;'></center>"
-                                    +"</div>";
-                            }
-                        }
 
                         element = document.getElementById('carousel-indicators');
                         var searchThis = element.innerHTML;
 
-                    },
-                    error: function failCallBk(XMKHttpRequest, textStatus, errorThrown){
-                        alert(XMKHttpRequest.status + " " + XMKHttpRequest.statusText + " " + errorThrown + "\n" +"An error occured while processing your request. Please try again.");
-                    }
-                }).done(function() {
                     $('#carousel-indicators').html(source1);
                     $('#carousel-inner').html(source2);
 
@@ -226,33 +142,10 @@
                         changeHash: true,
                         reverse : false }
                     );
-                });
             }
 
             $('#loginBtn').click(function() {
-                //alert($('#id').val()+ " " + $('#pass').val());
-                $.ajax({
-
-                    //type: "GET",
-                    url: "http://seongjo03.gonetis.com/capstone/login.php",   // use for mobile
-                    //url: "http://192.168.1.2/capstone/login.php",   // use for mobile
-                    data: {ID: $("#id").val(),
-                            PASS: $("#pass").val()},
-                    dataType: "text",
-                    success: function(data){
-                        //var data = JSON.parse(json);            //Parsing JSON data
-
-                        if(data == 'success'){                 // if user sign in successfully,
-                            loginSuccess();
-
-                        }else{
-                            alert("Incorrect ID or Password.");
-                        }
-                    },
-                    error: function failCallBk(XMKHttpRequest, textStatus, errorThrown){
-                        alert(XMKHttpRequest.status + " " + XMKHttpRequest.statusText + " " + errorThrown + "\n" +"An error occured while processing your request. Please try again.");
-                    }
-                });
+ 		loginSuccess();
             });
         });
 
@@ -261,177 +154,135 @@
             clearInterval(intervalDetail2);
             clearInterval(intervalRoomInfo);
             var rooms = [];
+	    var json = {
+	        R_ROOMNAME : ["101", "102", "201", "202"],
+	        R_FLOOR : ["1", "2"]
+	    };
 
-            $.ajax({
-                url:"http://seongjo03.gonetis.com/capstone/rooms.php",
-                //url:"http://192.168.1.2/capstone/rooms.php",
-                data: {r_id: id},
-                dataType: "json",
-                success: function(json){
+            var strfl = json.R_ROOMNAME[0] + "";
+            var floor = json.R_FLOOR[0];
+            var collapseno = "collapse"+floor;
 
-                    //var data = JSON.parse(json);
-                    var tester = "";
+            var source = ""
+                + "<img src='img/header_bar.png' style='position: relative; top:0; height:8%; width:100%'><br><br>"
+                + "<center><img src='img/" + "building_a" + ".png' style='position:relative; height:30%;'></center>"
+                + "<p style='padding-left : 3%; margin-top:25px; margin-bottom:25px; font-size:17pt'>" + "Lecture Building A" + "</p>"
 
-                    var strfl = json.R_ROOMNAME[0] + "";
-                    //var floor = strfl.charAt(1);
-                    var floor = json.R_FLOOR[0];
-                    var collapseno = "collapse"+floor;
+                +"<div class='accordion-group'>"
+                +"<div class='accordion-heading'>"
+                +"<label style='width:100%; height:2px; background-color:#52989d; margin:0;'/>"
+                +"<table class='accordion-toggle' data-toggle='collapse' href='#" + "1F" + "' style='width:100%; background-color:#6cb3b7; font-color: white; margin:0; height:60px;'><tr><td style='padding-left:3%; font-size:16pt'>" + "1F" + "</tr></td></table>"
+                +"</div>"
+                +"<div id='" + "1F" + "' class='accordion-body collapse in'>"
+                +"<div class='accordion-inner'>"
 
-                    if (floor == null){
-                        var source = ""
-                            + "<img src='img/header_bar.png' style='position: relative; top:0; height:8%; width:100%'><br><br>"
-                            + "<center><img src='http://seongjo03.gonetis.com/capstone/buildingIMG/" + building + ".png' alt='" + building + "' style='position:relative; height:30%;'></center>"
-                            + "<p style='padding-left : 3%; margin-top:25px; margin-bottom:25px; font-size:17pt'>" + building + "</p>"
-                            + "<p style='padding-left:3%;'>empty</p>";
-                    }else{
-                        var source = ""
-                            + "<img src='img/header_bar.png' style='position: relative; top:0; height:8%; width:100%'><br><br>"
-                            + "<center><img src='http://seongjo03.gonetis.com/capstone/buildingIMG/" + building + ".png' alt='" + building + "' style='position:relative; height:30%;'></center>"
-                            + "<p style='padding-left : 3%; margin-top:25px; margin-bottom:25px; font-size:17pt'>" + building + "</p>"
-                            +"<div class='accordion-group'>"
-                            +"<div class='accordion-heading'>"
-                            +"<label style='width:100%; height:2px; background-color:#52989d; margin:0;'/>"
-                            +"<table class='accordion-toggle' data-toggle='collapse' href='#" + collapseno + "' style='width:100%; background-color:#6cb3b7; font-color: white; margin:0; height:60px;'><tr><td style='padding-left:3%; font-size:16pt'>" + floor + "</tr></td></table>"
-                            +"</div>"
-                            +"<div id='" + collapseno + "' class='accordion-body collapse in'>"
-                            +"<div class='accordion-inner'>";
+		+"<table id='" + "A101" + "_status' class='stat1' onclick='detail(\""+"1"+"\", \""+ "A101" +"\");' style='margin:2px;'>"
+	     	+   "<tr>"
+                +       "<th colspan='2'><center>" + "A101" + "</center></th>"
+                +   "</tr>"
+                +   "<tr>"
+                +        "<td><center><img id='" + "A101" + "_light' src='img/light_off.png' style='width:45%;'></center></td>"
+                +        "<td><center><img id='" + "A101" + "_door' src='img/door_close.png' style='width:45%;'></center></td>"
+                +   "</tr>"
+                +   "<tr align='center'>"
+                +        "<td>Temp.</td>"
+                +        "<td id='" + "A101" + "_temp'>12C</td>"
+                +    "</tr>"
+                +    "<tr align='center'>"
+                +        "<td>Hum.</td>"
+                +        "<td id='" + "A101" + "_hum'>67%</td>"
+                +    "</tr>"
+                +"</table>"
 
-                        for(var i in json.R_ROOMNAME){
-                            //rooms.push(json.R_ROOMNAME[i]);
-                            if (json.R_FLOOR[i] != floor){
+		+"<table id='" + "A102" + "_status' class='stat1' onclick='detail(\""+"1"+"\", \""+ "A102" +"\");' style='margin:2px;'>"
+	     	+   "<tr>"
+                +       "<th colspan='2'><center>" + "A102" + "</center></th>"
+                +   "</tr>"
+                +   "<tr>"
+                +        "<td><center><img id='" + "A102" + "_light' src='img/light_off.png' style='width:45%;'></center></td>"
+                +        "<td><center><img id='" + "A102" + "_door' src='img/door_open.png' style='width:45%;'></center></td>"
+                +   "</tr>"
+                +   "<tr align='center'>"
+                +        "<td>Temp.</td>"
+                +        "<td id='" + "A102" + "_temp'>13C</td>"
+                +    "</tr>"
+                +    "<tr align='center'>"
+                +        "<td>Hum.</td>"
+                +        "<td id='" + "A102" + "_hum'>66%</td>"
+                +    "</tr>"
+                +"</table>"
 
-                                floor = json.R_FLOOR[i];
-                                collapseno = "collapse"+floor;
+		+"<table id='" + "A103" + "_status' class='stat2' onclick='detail(\""+"1"+"\", \""+ "A103" +"\");' style='margin:2px;'>"
+	     	+   "<tr>"
+                +       "<th colspan='2'><center>" + "A103" + "</center></th>"
+                +   "</tr>"
+                +   "<tr>"
+                +        "<td><center><img id='" + "A103" + "_light' src='img/light_disc.png' style='width:45%;'></center></td>"
+                +        "<td><center><img id='" + "A103" + "_door' src='img/door_disc.png' style='width:45%;'></center></td>"
+                +   "</tr>"
+                +   "<tr align='center'>"
+                +        "<td>Temp.</td>"
+                +        "<td id='" + "A103" + "_temp'>no data</td>"
+                +    "</tr>"
+                +    "<tr align='center'>"
+                +        "<td>Hum.</td>"
+                +        "<td id='" + "A103" + "_hum'>no data</td>"
+                +    "</tr>"
+                +"</table>"
 
-                                source = source
-                                    +"</div></div></div>"
-                                    +"<div class='accordion-group'>"
-                                    +"<div class='accordion-heading'>"
-                                    +"<label style='width:100%; height:2px; background-color:#52989d; margin:0;'/>"
-                                    +"<table class='accordion-toggle' data-toggle='collapse' href='#" + collapseno + "' style='width:100%; background-color:#6cb3b7; font-color: white; margin:0; height:60px'><tr><td style='padding-left:3%; font-size:16pt'>" + floor + "</tr></td></table>"
-                                    +"</div>"
-                                    +"<div id='" + collapseno + "' class='accordion-body collapse in'>"
-                                    +"<div class='accordion-inner'>"
+		+"<table id='" + "A104" + "_status' class='stat1' onclick='detail(\""+"1"+"\", \""+ "A104" +"\");' style='margin:2px;'>"
+	     	+   "<tr>"
+                +       "<th colspan='2'><center>" + "A104" + "</center></th>"
+                +   "</tr>"
+                +   "<tr>"
+                +        "<td><center><img id='" + "A104" + "_light' src='img/light_on.png' style='width:45%;'></center></td>"
+                +        "<td><center><img id='" + "A104" + "_door' src='img/door_close.png' style='width:45%;'></center></td>"
+                +   "</tr>"
+                +   "<tr align='center'>"
+                +        "<td>Temp.</td>"
+                +        "<td id='" + "A103" + "_temp'>13C</td>"
+                +    "</tr>"
+                +    "<tr align='center'>"
+                +        "<td>Hum.</td>"
+                +        "<td id='" + "A103" + "_hum'>65%</td>"
+                +    "</tr>"
+                +"</table>"
+		
+		+"</div></div></div>"
 
-                                    //+"<table id='" + json.R_ROOMNAME[i] + "_status' class='stat1' onclick='detail(\""+building+"\", "+json.R_ROOMNAME[i]+");' style='margin:2px'>"
-                                    +"<table id='" + json.R_ROOMNAME[i] + "_status' class='stat2' onclick='detail(\""+id+"\", \""+json.R_ROOMNAME[i]+"\");' style='margin:2px;'>"
-                                    +   "<tr>"
-                                    +       "<th colspan='2'><center>" + json.R_ROOMNAME[i] + "</center></th>"
-                                    +   "</tr>"
-                                    +   "<tr>"
-                                    +        "<td><center><img id='" + json.R_ROOMNAME[i] + "_light' src='img/light_disc.png' style='width:45%;'></center></td>"
-                                    +        "<td><center><img id='" + json.R_ROOMNAME[i] + "_door' src='img/door_disc.png' style='width:45%;'></center></td>"
-                                    +   "</tr>"
-                                    +   "<tr align='center'>"
-                                    +        "<td>Temp.</td>"
-                                    +        "<td id='" + json.R_ROOMNAME[i] + "_temp'>no data</td>"
-                                    +    "</tr>"
-                                    +    "<tr align='center'>"
-                                    +        "<td>Hum.</td>"
-                                    +        "<td id='" + json.R_ROOMNAME[i] + "_hum'>no data</td>"
-                                    +    "</tr>"
-                                    +"</table>";
+                +"<div class='accordion-group'>"
+                +"<div class='accordion-heading'>"
+                +"<label style='width:100%; height:2px; background-color:#52989d; margin:0;'/>"
+                +"<table class='accordion-toggle' data-toggle='collapse' href='#" + "2F" + "' style='width:100%; background-color:#6cb3b7; font-color: white; margin:0; height:60px;'><tr><td style='padding-left:3%; font-size:16pt'>" + "2F" + "</tr></td></table>"
+                +"</div>"
+                +"<div id='" + "2F" + "' class='accordion-body collapse in'>"
+                +"<div class='accordion-inner'>"
 
-                            }else{
-                                source = source
-                                    //+"<a href='#RoomInfoPage' style='font-weight:normal; color:black; text-decoration:none;'>"
-                                    +"<table id='" + json.R_ROOMNAME[i] + "_status' class='stat2' onclick='detail(\""+id+"\", \""+json.R_ROOMNAME[i]+"\");' style='margin:2px;'>"
-                                    +   "<tr>"
-                                    +       "<th colspan='2'><center>" + json.R_ROOMNAME[i] + "</center></th>"
-                                    +   "</tr>"
-                                    +   "<tr>"
-                                    +        "<td><center><img id='" + json.R_ROOMNAME[i] + "_light' src='img/light_disc.png' style='width:45%;'></center></td>"
-                                    +        "<td><center><img id='" + json.R_ROOMNAME[i] + "_door' src='img/door_disc.png' style='width:45%;'></center></td>"
-                                    +   "</tr>"
-                                    +   "<tr align='center'>"
-                                    +        "<td>Temp.</td>"
-                                    +        "<td id='" + json.R_ROOMNAME[i] + "_temp'>no data</td>"
-                                    +    "</tr>"
-                                    +    "<tr align='center'>"
-                                    +        "<td>Hum.</td>"
-                                    +        "<td id='" + json.R_ROOMNAME[i] + "_hum'>no data</td>"
-                                    +    "</tr>"
-                                    +"</table>";
-                                    //+"</a>";
-                            }
+		+"<table id='" + "A201" + "_status' class='stat1' onclick='detail(\""+"1"+"\", \""+ "A201" +"\");' style='margin:2px;'>"
+	     	+   "<tr>"
+                +       "<th colspan='2'><center>" + "A201" + "</center></th>"
+                +   "</tr>"
+                +   "<tr>"
+                +        "<td><center><img id='" + "A201" + "_light' src='img/light_on.png' style='width:45%;'></center></td>"
+                +        "<td><center><img id='" + "A201" + "_door' src='img/door_open.png' style='width:45%;'></center></td>"
+                +   "</tr>"
+                +   "<tr align='center'>"
+                +        "<td>Temp.</td>"
+                +        "<td id='" + "A201" + "_temp'>13C</td>"
+                +    "</tr>"
+                +    "<tr align='center'>"
+                +        "<td>Hum.</td>"
+                +        "<td id='" + "A201" + "_hum'>62%</td>"
+                +    "</tr>"
+                +"</table>"
+                + "</div></div></div></div><label style='width:100%; background-color:#73babe; height:2px;'/>";
 
-                        }
-                        
-                        source = source + "</div></div></div></div><label style='width:100%; background-color:#73babe; height:2px;'/>";
-                    }
-
-                    $('#buildinginfo').html(source);
-
-                    element = document.getElementById('buildinginfo');
-                    var searchThis = element.innerHTML;
-                    //alert(searchThis);
-                    //alert(tester);
-
-                    roomreload(id, json);
-                    intervalRoomInfo = setInterval(function(){
-                        roomreload(id, json);
-                    }, listinterval);
-
-
-                    $.mobile.changePage( "#BuildingInfoPage",
-                        { transition: "slide",
-                            changeHash: true,
-                            reverse :false }
-                    );
-                },
-                error: function failCallBk(XMKHttpRequest, textStatus, errorThrown){
-                    console.log(XMKHttpRequest.status + " " + XMKHttpRequest.statusText + " " + errorThrown + "\n" +"An error occured while processing your request. Please try again.");
-                    alert(XMKHttpRequest.status + " " + XMKHttpRequest.statusText + " " + errorThrown + "\n" +"An error occured while processing your request. Please try again.");
-                }
-            });
-            
-            function roomreload(building, json){
-
-                $.ajax({
-                    url:"http://seongjo03.gonetis.com/capstone/sensorR.php",
-                    //url:"http://192.168.1.2/capstone/sensorR.php",
-                    data: {r_building: building},
-                    dataType: "json",
-                    success: function(json2){
-                    
-                        for(var i in json.R_ROOMNAME){
-                            document.getElementById(json.R_ROOMNAME[i]+"_status").className = "stat2";
-                            //console.log("SET " + json.R_ROOMNAME[i] + " OFF");
-                        }
-                        
-                        for(var i in json2.R_ROOM){
-                        
-                            document.getElementById(json2.R_ROOM[i]+"_status").className = "stat1";
-                            
-
-                            switch(json2.R_ID[i]){
-                                case "1" :
-                                    var strArray = json2.R_VALUE[i].split('.');
-                                    document.getElementById(json2.R_ROOM[i]+"_temp").innerHTML = strArray[0] + "." + strArray[1].substring(0,2) + "c";
-                                    break;
-                                case "2" :
-                                    var strArray = json2.R_VALUE[i].split('.');
-                                    document.getElementById(json2.R_ROOM[i]+"_hum").innerHTML = strArray[0] + "." + strArray[1].substring(0,2) + "%";
-                                    break;
-                                case "4" :
-                                    if(json2.R_VALUE == 1) document.getElementById(json2.R_ROOM[i]+"_door").src = 'img/door_open.png';
-                                    else document.getElementById(json2.R_ROOM[i]+"_door").src = 'img/door_close.png';
-                                    break;
-                                case "5" :
-                                    //console.log("id : " + json2.R_ID[i] + "\nvalue : " + json2.R_VALUE[i] + "\n");
-                                    if(json2.R_VALUE[i] > 10) document.getElementById(json2.R_ROOM[i]+"_light").src = 'img/light_on.png';
-                                    else document.getElementById(json2.R_ROOM[i]+"_light").src = 'img/light_off.png';
-                                    break;
-                            }
-                        }
-
-                    },
-                    error: function failCallBk(XMKHttpRequest, textStatus, errorThrown){
-                        console.log(XMKHttpRequest.status + " " + XMKHttpRequest.statusText + " " + errorThrown + "\n" +"An error occured while processing your request. Please try again.");
-                    }
-                });
-            }
-
+     		$('#buildinginfo').html(source);
+		$.mobile.changePage( "#BuildingInfoPage",
+		    { transition: "slide",
+                        changeHash: true,
+                        reverse :false }
+                );
         }
 
         
@@ -462,397 +313,202 @@
                 + "</table>";
 
             document.getElementById('roominfo').innerHTML = source;
-
-
             //document.getElementById('detail_room').innerHTML = "<center>" + building + "-" + roomno + "</center>";
 
-            $.ajax({
-                url:"http://seongjo03.gonetis.com/capstone/sensorR2.php",
-                //url:"http://192.168.1.2/capstone/sensorR2.php",
-                type: "GET",
-                data: {d_building: building,
-                    d_roomno: roomno},
-                dataType: "json",
-                success: function(json){
-                    
-                    detailreload(building, roomno);
-                },
-                error: function failCallBk(XMKHttpRequest, textStatus, errorThrown){
-                    console.log(XMKHttpRequest.status + " " + XMKHttpRequest.statusText + " " + errorThrown + "\n" +"An error occured while processing your request. Please try again.");
-                }
-            }).done(
-                function(){
-                    
-                       
-                }
-            );
-                    $.mobile.changePage( "#RoomInfoPage",
-                    { transition: "slide",
-                        changeHash: false,
-                        reverse :false }
-                    ); 
-            
-
-            
-            
+   	    detailreload(building, roomno);
+            $.mobile.changePage( "#RoomInfoPage",
+            	{transition: "slide",
+                    changeHash: false,
+                    reverse :false }
+            ); 
         }
 
-        function setdetail(item, stat){
-            if (item == 4) {
-                if (stat == 1){
-                    document.getElementById("detail_door").innerHTML = "CLOSED";
-                    //console.log("setdetail(4, 1)\n");
-                }else{
-                    document.getElementById("detail_door").innerHTML = 'OPEN';
-                    //console.log("setdetail(4, 0)\n");
-                }
-            }else if (item == 5){
-                if (stat == 1){
-                    document.getElementById("detail_light").innerHTML = "ON";
-                    //console.log("setdetail(5, 1)\n");
-                }else{
-                    document.getElementById("detail_light").innerHTML = 'OFF';
-                    //console.log("setdetail(5, 0)\n");
-                }
-            }
-        }
-        function setData(building, roomno) {
-        
-            $.ajax({
-                url:"http://seongjo03.gonetis.com/capstone/sensorR2.php",
-                //url:"http://192.168.1.2/capstone/sensorR2.php",
-                type: "GET",
-                data: {d_building: building,
-                    d_roomno: roomno},
-                dataType: "json",
-                success: function(json){
-                    for(var i in json.R_ID){
-                        switch(json.R_ID[i]){
-                            case "4":
-                                if (json.R_VALUE[i] == 1) setdetail(4, 1)
-                                else setdetail(4, 0)
-                                break;
-
-                            case "5":
-                                //console.log("case 5 : " + json2.R_VALUE[i] + "\n");
-                                if (json.R_VALUE[i] > 10) setdetail(5, 1);
-                                else setdetail(5, 0);
-                                break;
-                        }
-                    }
-                    //console.log(JSON.stringify(json));
-
-                },
-                error: function failCallBk(XMKHttpRequest, textStatus, errorThrown){
-                    console.log(XMKHttpRequest.status + " " + XMKHttpRequest.statusText + " " + errorThrown + "\n" +"An error occured while processing your request. Please try again.");
-                }
-            });
-        }
 
         function detailreload(building, roomno){
 
             clearInterval(intervalDetail);
             clearInterval(intervalDetail2);
             clearInterval(intervalRoomInfo);
-            document.getElementById("detail_door").innerHTML = "<div style='color:#52989d;'>DISCONNECTED</div>";
-            document.getElementById("detail_light").innerHTML = "<div style='color:#52989d;'>DISCONNECTED</div>";
-                
-            $.ajax({
-                url:"http://seongjo03.gonetis.com/capstone/sensorR3.php",
-                //url:"http://192.168.1.2/capstone/sensorR3.php",
-                type: "GET",
-                data: {d_building: building,
-                    d_roomno: roomno},
-                dataType: "json",
-                success: function(json2){
-                    //******************************* CHART MAKER
-                    Highcharts.setOptions({
-                        global: {
-                            useUTC: false
-                        },
-                        colors: ['#d15c5c', '#5364d9']
-                    });
 
-                    $('#chart1').highcharts({
+	    switch (roomno){
+		case "A101":
+            		document.getElementById("detail_door").innerHTML = "<div style='color:#FFFFFF;'>OFF</div>";
+		        document.getElementById("detail_light").innerHTML = "<div style='color:#FFFFFF;'>CLOSED</div>";
+			
+			break;
 
-                        chart: {
-                            type: 'spline',
-                            animation: Highcharts.svg, // don't animate in old IE
-                            marginRight: 50,
-                            events: {
-                                load: function () {
+		case "A102":
+            		document.getElementById("detail_door").innerHTML = "<div style='color:#FFFFFF;'>OFF</div>";
+		        document.getElementById("detail_light").innerHTML = "<div style='color:#FFFFFF;'>OPENED</div>";
+			
+			break;
 
-                                    // set up the updating of the chart each second
-                                    var series_hum = this.series[0];
-                                    var series_temp = this.series[1];
-                                    
-                                    setData(building, roomno);
-                                    
-                                    intervalDetail2 = setInterval(function() {
-                                    
-                                        var set = {};
-                                        var x = (new Date()).getTime(), // current time
-                                            //y = 23 + Math.random()*2,
-                                            //y2 = 55 + Math.random()*2;
-                                            y, y2;
+		case "A103":
+            		document.getElementById("detail_door").innerHTML = "<div style='color:#52989d;'>DISCONNECTED</div>";
+		        document.getElementById("detail_light").innerHTML = "<div style='color:#52989d;'>DISCONNECTED</div>";
+			
+			break;
 
-                                        //this.series[0].addPoint([x, y], false, true);
-                                        //this.series[1].addPoint([x, y2], true,true);
-                                    
-                                        $.ajax({
-                                            url:"http://seongjo03.gonetis.com/capstone/sensorR2.php",
-                                            //url:"http://192.168.1.2/capstone/sensorR2.php",
-                                            type: "GET",
-                                            data: {d_building: building,
-                                                    d_roomno: roomno},
-                                            dataType: "json",
-                                            success: function(json){
-                                                for(var i in json.R_ID){
-                                                    switch(json.R_ID[i]){
-                                                    
-                                                        case "1":
-                                                            y = parseFloat(json.R_VALUE[i]);
-                                                            //console.log("y = " + json.R_VALUE[i]);
-                                                            break;
-                                                            
-                                                        case "2":
-                                                            y2 = parseFloat(json.R_VALUE[i]);
-                                                            //console.log("y2 = " + json.R_VALUE[i]);
-                                                            break;
-                                                       
-                                                        case "4":
-                                                            if (json.R_VALUE[i] == 1) setdetail(4, 1);
-                                                            else setdetail(4, 0);
-                                                            break;
+		case "A104":
+            		document.getElementById("detail_door").innerHTML = "<div style='color:#FFFFFF;'>ON</div>";
+		        document.getElementById("detail_light").innerHTML = "<div style='color:#FFFFFF;'>CLOSED</div>";
+			
+			break;
 
-                                                        case "5":
-                                                            //console.log("case 5 : " + json2.R_VALUE[i] + "\n");
-                                                            if (json.R_VALUE[i] > 10) setdetail(5, 1);
-                                                            else setdetail(5, 0);
-                                                            break;
-                                                    }
-                                                }
-                                                //console.log(JSON.stringify(json));
+		case "A201":
+            		document.getElementById("detail_door").innerHTML = "<div style='color:#FFFFFF;'>ON</div>";
+		        document.getElementById("detail_light").innerHTML = "<div style='color:#FFFFFF;'>OPENED</div>";
+			
+			break;		
+	    }
 
-                                            },
-                                            error: function failCallBk(XMKHttpRequest, textStatus, errorThrown){
-                                                console.log(XMKHttpRequest.status + " " + XMKHttpRequest.statusText + " " + errorThrown + "\n" +"An error occured while processing your request. Please try again.");
-                                            }
-                                        }).done(function() {
-                                            series_hum.addPoint([x, y], false, true);
-                                            series_temp.addPoint([x, y2], true, true);
-                                        
-                                            //console.log("series_hum.addPoint(["+x+", "+y+"], false, true);");
-                                            //console.log("series_temp.addPoint(["+x+", "+y2+"], true, true);");
-                                        });
-                                    }, detailinterval);
-                                }
-                            },
-                            backgroundColor:'rgba(255, 250, 255, 0.1)',
-                            style: { fontFamily: 'Leewlawadee'
-                                , fontSize: '17px'
-                                , textShadow: true
-                                //, fontSize: '17px'
-
-                            }
-                        },
-                        title: {
-                            text: " "
-                        },
-                        xAxis: {
-                            type: 'datetime',
-                            tickPixelInterval: tickinterval
-                        },
-                        yAxis: [{ // Primary yAxis
-                                //min : 0.0,
-                                //max : 1,
-                                labels: {
-                                    style: {
-                                        color : Highcharts.getOptions().colors[0]
-                                    }
-                                //y: 16
-                                },
-                                title: {
-                                    text: 'Temp',
-                                    style: {
-                                        color : Highcharts.getOptions().colors[0]
-                                    }
-                                },
-                                plotLines: [{
-                                    value: 0,
-                                    width: 1,
-                                    color: Highcharts.getOptions().colors[0]
-                                }]
-                            },{ // Secondary yAxis
-                                title : 'Humidity',
-                                //min : 50,
-                                //max : 90,
-                                opposite : true,
-                                labels: {
-                                    align : 'left',
-                                    x: 5,
-                                    style: {
-                                        color : Highcharts.getOptions().colors[1]
-                                    }
-                                    //y: 16
-                                },
-                                title: {
-                                    text: 'Hum',
-                                    style: {
-                                        color : Highcharts.getOptions().colors[1]
-                                    }
-                                },
-                                plotLines: [{
-                                    value: 0,
-                                    width: 1,
-                                    color : Highcharts.getOptions().colors[1]
-                                }]
-                            }
-                        ],
-                        tooltip: {
-                            formatter: function () {
-                                return '<b>' + this.series.name + '</b><br/>' +
-                                    Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' +
-                                    Highcharts.numberFormat(this.y, 2);
-                                },
-                            //backgroundColor: "rgba(255,255,255,0.8)",
-                        },
-                        legend: {
-                            enabled: false
-                        },
-                        exporting: {
-                            enabled: false
-                        },
-                        series: [{
-                            name: 'Temperature',
-                            yAxis: 0,
-                            data: (function () {
-                                // generate an array of random data
-                                var data = [],
-                                    time = (new Date()).getTime(),
-                                    i;
-                                /*
-                                for (i = 0; i < 10; i ++) {
-                                    data.push({
-                                        //x: time + (i-10) * 1000 * 30,
-                                        x: time + (i-10) * 1000,
-                                        y: 23 - (Math.random()*0.3 * i)
-                                    });
-                                }
-                                */
-                                data.push({
-                                    x: time + (-9) * 1000,
-                                    y: 23
-                                });
-                                data.push({
-                                    x: time + (-8) * 1000,
-                                    y: 22.92
-                                });
-                                data.push({
-                                    x: time + (-7) * 1000,
-                                    y: 22.87
-                                });
-                                data.push({
-                                    x: time + (-6) * 1000,
-                                    y: 22.86
-                                });
-                                data.push({
-                                    x: time + (-5) * 1000,
-                                    y: 22.79
-                                });
-                                data.push({
-                                    x: time + (-4) * 1000,
-                                    y: 22.80
-                                });
-                                data.push({
-                                    x: time + (-3) * 1000,
-                                    y: 22.78
-                                });
-                                data.push({
-                                    x: time + (-2) * 1000,
-                                    y: 22.78
-                                });
-                                data.push({
-                                    x: time + (-1) * 1000,
-                                    y: 22.76
-                                });
-                                data.push({
-                                    x: time,
-                                    y: 22.77
-                                });
-                                return data;
-                            }())
-                        },{
-                            name: 'Humidity',
-                            yAxis: 1,
-                            data: (function () {
-                                // generate an array of random data
-                                var data = [],
-                                    time = (new Date()).getTime(),
-                                    i;
-                                    /*
-                                for (i = 0; i < 10; i ++) {
-                                    data.push({
-                                        //x: time + (i-10) * 1000 * 30,
-                                        x: time + (i-10) * 1000,
-                                        //y: 55 + Math.random()*0.3
-                                        y: 55 - (Math.random()*0.3 * i)
-                                    });
-                                }
-                                */
-                                data.push({
-                                    x: time + (-9) * 1000,
-                                    y: 65
-                                });
-                                data.push({
-                                    x: time + (-8) * 1000,
-                                    y: 64.89
-                                });
-                                data.push({
-                                    x: time + (-7) * 1000,
-                                    y: 64.78
-                                });
-                                data.push({
-                                    x: time + (-6) * 1000,
-                                    y: 64.71
-                                });
-                                data.push({
-                                    x: time + (-5) * 1000,
-                                    y: 64.66
-                                });
-                                data.push({
-                                    x: time + (-4) * 1000,
-                                    y: 64.68
-                                });
-                                data.push({
-                                    x: time + (-3) * 1000,
-                                    y: 64.55
-                                });
-                                data.push({
-                                    x: time + (-2) * 1000,
-                                    y: 64.52
-                                });
-                                data.push({
-                                    x: time + (-1) * 1000,
-                                    y: 64.57
-                                });
-                                data.push({
-                                    x: time,
-                                    y: 64.56
-                                });
-                                
-                                return data;
-                            }())
-                        }]
-                    });
+            //******************************* CHART MAKER
+            Highcharts.setOptions({
+                global: {
+                    useUTC: false
                 },
-                error: function failCallBk(XMKHttpRequest, textStatus, errorThrown){
-                    console.log(XMKHttpRequest.status + " " + XMKHttpRequest.statusText + " " + errorThrown + "\n" +"An error occured while processing your request. Please try again.");
-                }
+                colors: ['#d15c5c', '#5364d9']
             });
-        }
+	    $('#chart1').innerHTML("hi");
+            $('#chart1').highcharts({
 
+                chart: {
+                    type: 'spline',
+                    animation: Highcharts.svg, // don't animate in old IE
+                    marginRight: 50,
+                    events: {
+                        load: function () {
 
+                        // set up the updating of the chart each second
+                        var series_hum = this.series[0];
+                        var series_temp = this.series[1];
+                                    
+                        intervalDetail2 = setInterval(function() {
+                                    
+                            var set = {};
+                            var x = (new Date()).getTime(), // current time
+                                y = 12 + Math.random()*2,
+                                y2 = 66 + Math.random()*2;
+                                //y, y2;
+
+                            this.series[0].addPoint([x, y], false, true);
+                            this.series[1].addPoint([x, y2], true,true);
+                                /*
+				series_hum.addPoint([x, y], false, true);
+                                series_temp.addPoint([x, y2], true, true);
+                            */
+                        }, detailinterval);
+                    }
+                },
+                backgroundColor:'rgba(255, 250, 255, 0.1)',
+                style: { fontFamily: 'Leewlawadee'
+                    , fontSize: '17px'
+                    , textShadow: true
+                 }
+            },
+            title: {
+                text: " "
+            },
+            xAxis: {
+                type: 'datetime',
+                tickPixelInterval: tickinterval
+            },
+            yAxis: [{ // Primary yAxis
+                    //min : 0.0,
+                    //max : 1,
+                    labels: {
+                        style: {
+                            color : Highcharts.getOptions().colors[0]
+                        }
+                    //y: 16
+                    },
+                    title: {
+                        text: 'Temp',
+                        style: {
+                            color : Highcharts.getOptions().colors[0]
+                        }
+                    },
+                    plotLines: [{
+                        value: 0,
+                        width: 1,
+                        color: Highcharts.getOptions().colors[0]
+                    }]
+                },{ // Secondary yAxis
+                    title : 'Humidity',
+                    //min : 50,
+                    //max : 90,
+                    opposite : true,
+                    labels: {
+                        align : 'left',
+                        x: 5,
+                        style: {
+                            color : Highcharts.getOptions().colors[1]
+                        }
+                        //y: 16
+                    },
+                    title: {
+                        text: 'Hum',
+                        style: {
+                            color : Highcharts.getOptions().colors[1]
+                        }
+                    },
+                    plotLines: [{
+                        value: 0,
+                        width: 1,
+                        color : Highcharts.getOptions().colors[1]
+                    }]
+                }
+            ],
+            tooltip: {
+                formatter: function () {
+                    return '<b>' + this.series.name + '</b><br/>' +
+                        Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' +
+                        Highcharts.numberFormat(this.y, 2);
+                    },
+                //backgroundColor: "rgba(255,255,255,0.8)",
+            },
+            legend: {
+                enabled: false
+            },
+            exporting: {
+                enabled: false
+            },
+            series: [{
+                name: 'Temperature',
+                yAxis: 0,
+                data: (function () {
+                    // generate an array of random data
+                    var data = [],
+                        time = (new Date()).getTime(),
+                        i;
+                    for (i = 0; i < 10; i ++) {
+                        data.push({
+                            x: time + (i-10) * 1000,
+                            y: 13 - (Math.random()*0.3 * i)
+                        });
+                    }
+                    return data;
+                }())
+            },{
+                name: 'Humidity',
+                yAxis: 1,
+                data: (function () {
+                    // generate an array of random data
+                    var data = [],
+                        time = (new Date()).getTime(),
+                        i;
+                    for (i = 0; i < 10; i ++) {
+                        data.push({
+                            x: time + (i-10) * 1000,
+                            y: 67 - (Math.random()*0.3 * i)
+                        });
+                    }
+                    
+                    return data;
+                }())
+            }]
+        });
+}
     </script>
 
 
@@ -867,14 +523,14 @@
         <table style="position: absolute; top: 47%; left: 15%; width: 70%;">
             <tr>
                 <td style="color:white; font-family:'Leelawadee'; font-size:10pt;">ID
-                    <input id="id" type="text" value="seongjo03"
+                    <input id="id" type="text"
                            style="position:absolute; background-color:#ffffff; color:#356d6e; font-family: 'Leelawadee'; font-size: 10px;  width: 100%;">
                     <br>
                 </td>
             </tr>
             <tr>
                 <td style="color:white; font-family:'Leelawadee'; font-size:10pt;">PASSWORD<br>
-                    <input id="pass" type="password" value="1234"
+                    <input id="pass" type="password"
                            style="position:absolute; background-color:#ffffff; color:#356d6e; font-family: 'Leelawadee'; font-size: 10px;  width: 100%;">
                     <br><br>
                 </td>
@@ -959,7 +615,6 @@
         <div class="container" id="buildinginfo"
              style="position:absolute; font-family: 'Leelawadee'; text-shadow: 0 0 0; color : white; padding:0; width:100%;">
 
-            <!-- sample
                 <h2>Lecture Building A</h2>
                 <div class="accordion" id="accordion2">
                     <div class="accordion-group">
@@ -970,8 +625,6 @@
                         </div>
                         <div id="collapseOne" class="accordion-body collapse in">
                             <div class="accordion-inner">
-
-
                                 <a href="#RoomInfoPage" style="font-weight:normal; color:black; text-decoration:none;">
                                     <table style="width:32%; border:solid; background-color:white; display:inline-table; margin-bottom:3px">
                                         <tr>
@@ -1025,7 +678,6 @@
                         </div>
                     </div>
                 </div>
-                -->
         </div>
 
     </div>
@@ -1052,8 +704,6 @@
             </table>
             -->
         </div>
-
-        <div id="hihi"></div>
     </div>
 
     <script type="text/javascript" src="cordova.js"></script>
